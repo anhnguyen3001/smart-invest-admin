@@ -1,4 +1,5 @@
 import API from 'services/request';
+import { LoginRequest } from '../types';
 
 const { iam } = window.config;
 
@@ -9,8 +10,11 @@ export const authApi = {
     );
     return data;
   },
-  login: async (body) => {
-    const { data } = await API.identityClient.post('/v1/users/login', body);
+  login: async (body: LoginRequest) => {
+    const { data } = await API.publicSmartInvestBffClient.post(
+      '/v1/auth/login',
+      body,
+    );
     return data;
   },
   register: async (body) => {

@@ -3,6 +3,10 @@ import { isLoggedIn, getAccessToken, handleResponseError } from 'utility/Utils';
 
 const { apiServices } = window.config;
 
+const publicSmartInvestBffClient = axios.create({
+  baseURL: apiServices.smartInvestBff,
+});
+
 const publicBuilderBffClient = axios.create({
   baseURL: apiServices.builderBff,
 });
@@ -90,6 +94,7 @@ publicClients.forEach((client) => {
 
 // eslint-disable-next-line
 export default {
+  publicSmartInvestBffClient,
   imageClient,
   builderBffClient,
   marketBffClient,

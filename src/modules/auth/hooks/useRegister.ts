@@ -1,40 +1,41 @@
 import { useState } from 'react';
 import { IAM_AUTH_ERROR_CODE } from '../constants/code';
-import { LoginRequest } from '../types';
+import { RegisterRequest } from '../types';
 import { authApi } from '../utils/api';
 
-export const useLogin = () => {
+export const useRegister = () => {
   const [loading, setLoading] = useState(false);
+
   const [errMsg, setErrMsg] = useState();
 
-  const onLogin = async (data: LoginRequest) => {
+  const onRegister = async (data: RegisterRequest) => {
+    setLoading(true);
+
     try {
-      setLoading(true);
-      await authApi.login(data);
+      await authApi.register(data);
     } catch (error) {
-      setLoading(false);
+      console.error(error);
 
       const code = error?.response?.data?.code;
       let errMsg;
 
       switch (code) {
-        case IAM_AUTH_ERROR_CODE.USERNAME_PASSWORD_NOT_CORRECT:
-          errMsg = 'Số điện thoai hoặc mật khẩu không đúng!';
-          break;
-        case IAM_AUTH_ERROR_CODE.ACCOUNT_NOT_ACTIVATE:
-          errMsg = 'Tài khoản không hợp lệ!';
+        case IAM_AUTH_ERROR_CODE.USER_EXISTED:
+          errMsg = 'Số điện thoại đã tồn tại!';
           break;
         default:
           errMsg = 'Hệ thống đang có lỗi, vui lòng thử lại sau!';
       }
 
       setErrMsg(errMsg);
+
+      setLoading(false);
     }
   };
 
   return {
     loading,
     errMsg,
-    onLogin,
+    onRegister,
   };
 };

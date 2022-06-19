@@ -13,6 +13,7 @@ window.config = {
     oauthDomain: 'https://oauth-marketplace.dev.tekoapis.net',
   },
   apiServices: {
+    smartInvestBff: 'http://localhost:8081',
     pageManagement: 'https://pm-bff.dev.tekoapis.net',
     builderBff: 'https://builder-bff.dev.tekoapis.net',
     marketBff: 'https://market-bff.dev.tekoapis.net/api',
