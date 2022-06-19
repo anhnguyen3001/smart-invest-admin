@@ -1,0 +1,151 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+// --- Nav, Navbar
+
+.nav-toggle {
+  display: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(142, 32, 193, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-header {
+  margin-bottom: 1em;
+  .navbar-brand {
+    margin-top: 1rem !important;
+  }
+}
+
+.nav-pills {
+  .nav-item {
+    .nav-link {
+      font-weight: 400;
+      color: #82869e;
+      &:hover {
+        color: #55586b;
+      }
+    }
+    .nav-link.active {
+      background-color: #f1f1f1;
+      border-radius: 24px;
+      color: #1b1d29;
+      border-color: #f1f1f1;
+      box-shadow: unset;
+      font-weight: 700;
+    }
+  }
+}
+
+.nav-item {
+  margin-bottom: 0.75rem;
+}
+
+.main-menu .navbar-header .navbar-brand .brand-logo img {
+  max-width: 96px;
+}
+
+// --- Table
+
+.rdt_TableCell {
+  height: auto !important;
+}
+
+.rdt_TableRow:hover {
+  background-color: #f6f6f6;
+}
+
+// --- Modal
+
+.modal-open {
+  overflow: hidden;
+}
+
+// --- Loading
+.ui-loader {
+  .overlay {
+    z-index: 1000;
+  }
+
+  .loader {
+    z-index: 1000;
+  }
+}
+
+// --- Layout
+
+html .content.app-content {
+  padding-top: 92px !important;
+}
+
+body {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+// --- Others
+
+.page-name {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-weight: bold;
+  line-height: 1.5em;
+}
+
+// --- Menu items
+
+.main-menu.menu-light .navigation li.nav-item {
+  a {
+    &:hover > * {
+      transform: unset; // -> remove animation on hover
+      color: #8e20c1;
+    }
+    &.active {
+      box-shadow: unset;
+    }
+    &:hover.active > * {
+      color: white;
+    }
+  }
+  ul.menu-content {
+    li {
+      a:hover > * {
+        transform: unset; // -> remove animation on hover
+        filter: opacity(0.75);
+      }
+    }
+  }
+}
+
+.main-menu.menu-light .navigation {
+  > li {
+    > a {
+      svg {
+        top: unset;
+      }
+    }
+  }
+}
+.scroll-top-wrapper {
+  right: 12px;
+  margin: 0px 12px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #8e20c1 !important;
+}
+
+.introduction-modal-wrapper .modal-content {
+  border-radius: 16px;
+}
