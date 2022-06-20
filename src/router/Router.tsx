@@ -2,6 +2,7 @@ import PrivateRoute from '@core/components/routes/PrivateRoute';
 import PublicRoute from '@core/components/routes/PublicRoute';
 import SpinnerComponent from '@core/components/spinner/Fallback-spinner';
 import BlankLayout from '@core/layouts/BlankLayout';
+import LayoutWrapper from '@core/layouts/components/layout-wrapper';
 import { LAYOUT } from 'configs/constants';
 import HorizontalLayout from 'layouts/HorizontalLayout';
 import VerticalLayout from 'layouts/VerticalLayout';
@@ -14,6 +15,33 @@ const Router = ({ routes }) => {
   const { blankLayoutRoutes, verticalLayoutRoutes, horizontalLayoutRoutes } =
     useFilterRoute(routes);
 
+  const renderBlankRoutes = () => {
+    return (
+      <Route path={blankLayoutRoutes.map((el) => el.path)}>
+        <BlankLayout>
+          <Suspense fallback={<SpinnerComponent />}>
+            <Switch>
+              {routes.map(({ component, ...rest }, index) => {
+                const RouteTag = rest?.meta?.publicRoute
+                  ? PublicRoute
+                  : PrivateRoute;
+                return (
+                  <Route exact key={index} {...rest}>
+                    <RouteTag>
+                      <Suspense fallback={<SpinnerComponent />}>
+                        {component}
+                      </Suspense>
+                    </RouteTag>
+                  </Route>
+                );
+              })}
+            </Switch>
+          </Suspense>
+        </BlankLayout>
+      </Route>
+    );
+  };
+
   const renderLayoutRoutes = (layout) => {
     const mapRoutesToLayout = () => {
       switch (layout) {
@@ -21,8 +49,6 @@ const Router = ({ routes }) => {
           return [verticalLayoutRoutes, VerticalLayout];
         case LAYOUT.horizontal:
           return [horizontalLayoutRoutes, HorizontalLayout];
-        case LAYOUT.blank:
-          return [blankLayoutRoutes, BlankLayout];
       }
     };
     const [routes, Layout] = mapRoutesToLayout();
@@ -37,9 +63,11 @@ const Router = ({ routes }) => {
             return (
               <Route exact key={index} {...rest}>
                 <RouteTag>
-                  <Suspense fallback={<SpinnerComponent />}>
-                    {component}
-                  </Suspense>
+                  <LayoutWrapper>
+                    <Suspense fallback={<SpinnerComponent />}>
+                      {component}
+                    </Suspense>
+                  </LayoutWrapper>
                 </RouteTag>
               </Route>
             );
@@ -62,7 +90,7 @@ const Router = ({ routes }) => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        {renderLayoutRoutes(LAYOUT.blank)}
+        {renderBlankRoutes()}
         {renderLayoutRoutes(LAYOUT.vertical)}
         {renderLayoutRoutes(LAYOUT.horizontal)}
       </Switch>

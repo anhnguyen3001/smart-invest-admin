@@ -1,13 +1,14 @@
+import { LAYOUT } from 'configs/constants';
+
 export const useFilterRoute = (routes) => {
   return {
     filterRoutes: routes,
-    blankLayoutRoutes: routes.filter((el) => el?.meta?.layout === 'blank'),
-    guestLayoutRoutes: routes.filter((el) => el?.meta?.layout === 'guest'),
+    blankLayoutRoutes: routes.filter((el) => el?.meta?.layout === LAYOUT.blank),
     verticalLayoutRoutes: routes.filter(
-      (el) => !el?.meta?.layout || el?.meta?.layout === 'vertical',
+      (el) => !el?.meta?.layout || el?.meta?.layout === LAYOUT.vertical,
     ),
     horizontalLayoutRoutes: routes.filter(
-      (el) => el?.meta?.layout === 'horizontal',
+      (el) => el?.meta?.layout === LAYOUT.horizontal,
     ),
   };
 };

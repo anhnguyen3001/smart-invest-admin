@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { HOME, LOGIN, REGISTER } from 'router/path';
 import AdminHome from '../../modules/home/views/AdminHome';
 import { SETTING } from '../path';
+import { UserRoutes } from './user';
 
 const DefaultRoute = '/';
 
@@ -51,6 +52,7 @@ const Routes = [
     contentType: 'other',
     component: <AccountSettings />,
   },
+  ...UserRoutes,
 ];
 
 export { DefaultRoute, Routes };

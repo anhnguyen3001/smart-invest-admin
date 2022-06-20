@@ -3,7 +3,11 @@ import { isLoggedIn, getAccessToken, handleResponseError } from 'utility/Utils';
 
 const { apiServices } = window.config;
 
-const publicSmartInvestBffClient = axios.create({
+const publicAdminBffClient = axios.create({
+  baseURL: apiServices.smartInvestBff,
+});
+
+const adminBffClient = axios.create({
   baseURL: apiServices.smartInvestBff,
 });
 
@@ -62,7 +66,12 @@ const responseErrorInterceptor = (error) => {
   return Promise.reject(error);
 };
 
-const clients = [imageClient, builderBffClient, marketBffClientProtected];
+const clients = [
+  adminBffClient,
+  imageClient,
+  builderBffClient,
+  marketBffClientProtected,
+];
 
 const clientsNoHandleError = [marketBffClient];
 
@@ -94,7 +103,9 @@ publicClients.forEach((client) => {
 
 // eslint-disable-next-line
 export default {
-  publicSmartInvestBffClient,
+  publicAdminBffClient,
+  adminBffClient,
+
   imageClient,
   builderBffClient,
   marketBffClient,

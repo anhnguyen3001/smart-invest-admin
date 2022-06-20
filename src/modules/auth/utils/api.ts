@@ -11,10 +11,7 @@ export const authApi = {
     return data;
   },
   login: async (body: LoginRequest) => {
-    const { data } = await API.publicSmartInvestBffClient.post(
-      '/v1/auth/login',
-      body,
-    );
+    const { data } = await API.publicAdminBffClient.post('/auth/login', body);
     return data;
   },
   register: async (body) => {

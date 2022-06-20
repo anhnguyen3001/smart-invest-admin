@@ -1,4 +1,9 @@
+export const LOGIN = '/login';
+export const REGISTER = '/register';
+
 export const HOME = '/';
+export const USER_LIST = '/users';
+
 export const ADMIN = '/admin';
 export const SETTING = ADMIN + '/account-settings';
 export const DOMAINS = ADMIN + '/domains';
@@ -15,9 +20,6 @@ export const TEMPLATE_PREVIEW = `/templates/:id/preview`;
 
 export const TERMS = '/terms';
 export const POLICY = '/policy';
-
-export const LOGIN = '/login';
-export const REGISTER = '/register';
 
 export const TRACKING_SCREEN_MAPPING = {
   [HOME]: 'guestHome',
