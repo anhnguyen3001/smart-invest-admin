@@ -1,14 +1,6 @@
-import { ADMIN, PAGE_LIST, SETTING, TEMPLATE_LIST, DOMAINS } from 'router/path';
+import { Home, Layers, Settings, User } from 'react-feather';
+import { ADMIN, SETTING, TEMPLATE_LIST, USER_LIST } from 'router/path';
 import { ACTION, APP, RESOURCES } from 'router/permission';
-import {
-  Home,
-  Layout,
-  Layers,
-  Grid,
-  Copy,
-  Settings,
-  Globe,
-} from 'react-feather';
 
 const navigation = [
   {
@@ -21,22 +13,12 @@ const navigation = [
     },
   },
   {
-    id: 'pageList',
-    title: 'Trang của bạn',
-    icon: <Layout size={20} />,
-    navLink: PAGE_LIST,
+    id: 'userList',
+    title: 'Danh sách người dùng',
+    icon: <User size={20} />,
+    navLink: USER_LIST,
     meta: {
-      publicRoute: false,
-    },
-  },
-  {
-    id: 'domainList',
-    title: 'Tên miền của bạn',
-    icon: <Globe size={20} />,
-    navLink: DOMAINS,
-    meta: {
-      publicRoute: false,
-      requiredOwnerMerchant: true,
+      publicRoute: true,
     },
   },
   {
@@ -79,88 +61,6 @@ const navigation = [
         id: 'category_templateList',
         title: 'Danh mục',
         navLink: '/template-categories',
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.CATEGORY,
-            action: ACTION.READ,
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: 'blockList',
-    title: 'Block',
-    icon: <Grid size={20} />,
-    meta: {
-      publicRoute: false,
-      permission: {
-        app: APP.BUILDER_BFF,
-        resource: RESOURCES.BLOCK,
-        action: ACTION.READ_UI,
-      },
-    },
-    children: [
-      {
-        id: 'blockList',
-        title: 'Danh sách block',
-        navLink: '/blocks',
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.BLOCK,
-            action: ACTION.READ,
-          },
-        },
-      },
-      {
-        id: 'category_blockList',
-        title: 'Danh mục',
-        navLink: '/block-categories',
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.CATEGORY,
-            action: ACTION.READ,
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: 'popupList',
-    title: 'Popup',
-    icon: <Copy size={20} />,
-    meta: {
-      publicRoute: false,
-      permission: {
-        app: APP.BUILDER_BFF,
-        resource: RESOURCES.POPUP,
-        action: ACTION.READ_UI,
-      },
-    },
-    children: [
-      {
-        id: 'popupList',
-        title: 'Danh sách popup',
-        navLink: '/popups',
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.POPUP,
-            action: ACTION.READ,
-          },
-        },
-      },
-      {
-        id: 'category_popupList',
-        title: 'Danh mục',
-        navLink: '/popup-categories',
         meta: {
           publicRoute: false,
           permission: {

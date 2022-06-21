@@ -1,5 +1,5 @@
 import '@core/scss/react/libs/tables/react-dataTable-component.scss';
-import Table from '../components/Table';
+import { Table } from '../components/Table';
 import { useUsers } from '../hooks/useUsers';
 
 const UserList = () => {

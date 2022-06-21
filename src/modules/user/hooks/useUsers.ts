@@ -61,13 +61,21 @@ export const useUsers = () => {
 
   const { users, pagination } = data?.data || {};
 
+  const onChangeParams = (params: GetUsersParams) => {
+    setParams((prev) => ({
+      ...prev,
+      ...params,
+      ...(params?.page !== undefined && { page: 1 }),
+    }));
+  };
+
   return {
     users: mockUsers as User[],
     loading: (!data && !error) || loading,
     onChangeKeyword: debounceSearch,
     setLoading,
     params,
-    onChangeParams: setParams,
+    onChangeParams: onChangeParams,
     totalItems: pagination?.totalItems,
     totalPages: pagination?.totalPages,
     mutateUsers: mutate,

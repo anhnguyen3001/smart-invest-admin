@@ -1,12 +1,14 @@
 import UILoader from '@core/components/ui-loader';
-import moment from 'moment';
+import { useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { ChevronDown, Shield, Trash } from 'react-feather';
+import { ChevronDown, Edit, Trash } from 'react-feather';
 import ReactPaginate from 'react-paginate';
-import { Badge, Button, Card, UncontrolledTooltip } from 'reactstrap';
-import { swalDeleteAction, swalWarningAction } from '../../../utility/Utils';
-import { GetUsersParams, User } from '../types';
-import { userApi } from '../utils/api';
+import { Button, Card, Input, UncontrolledTooltip } from 'reactstrap';
+import { swalDeleteAction, swalWarningAction } from 'utility/Utils';
+import { MAPPING_LOGIN_METHOD } from '../../constants';
+import { GetUsersParams, User } from '../../types';
+import { userApi } from '../../utils/api';
+import UserModal from '../UserModal';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 
 interface TableProps
@@ -19,7 +21,7 @@ interface TableProps
   mutateUsers: () => void;
 }
 
-const Table: React.FC<TableProps> = ({
+export const Table: React.FC<TableProps> = ({
   loading,
   setLoading,
   users,
@@ -29,11 +31,10 @@ const Table: React.FC<TableProps> = ({
   mutateUsers,
   ...tableHeaderProps
 }) => {
+  const [editedUser, setEditedUser] = useState<User>();
+
   const handlePagination = (page) => {
-    onChangeParams((prev) => ({
-      ...prev,
-      page: page.selected + 1,
-    }));
+    onChangeParams({ page: page.selected + 1 });
   };
 
   const deleteUser = async (id) => {
@@ -91,83 +92,86 @@ const Table: React.FC<TableProps> = ({
 
   const columns = [
     {
-      name: 'Tài khoản',
+      name: 'Tên',
       sortable: true,
       key: 'username',
-      minWidth: '300px',
-      cell: (row: User) => (
-        <div className="d-flex flex-column">
-          <div className="username">{row.username}</div>
-          <div className="mt-50 text-secondary">{row.email}</div>
-        </div>
-      ),
+      minWidth: '150px',
+      cell: (row: User) => <div className="username">{row.username}</div>,
     },
     {
-      name: 'Vai trò',
+      name: 'Email',
       sortable: true,
-      key: 'role',
-      cell: (row: User) => {
-        const { name } = row.role || {};
-        if (!name) {
-          return <div className="text-secondary">Chưa có vai trò</div>;
-        }
-
-        return <div className="text-truncate">{name}</div>;
-      },
-    },
-    {
-      name: 'Trạng thái',
-      center: true,
+      key: 'username',
+      minWidth: '250px',
       cell: (row: User) => (
         <>
-          {row.isVerified ? (
-            <Badge
-              pill
-              color="light-primary"
-              className="pe-50 ps-50 text-capitalize"
-            >
-              Đã xác thực
-            </Badge>
-          ) : (
-            <Badge
-              pill
-              color="light-secondary"
-              className="pe-50 ps-50 text-capitalize"
-            >
-              Chưa xác thực
-            </Badge>
-          )}
+          <div className="text-truncate" id="email">
+            {row.email}
+          </div>
+          <UncontrolledTooltip placement="top" target="email">
+            {row.email}
+          </UncontrolledTooltip>
         </>
+      ),
+    },
+
+    {
+      name: 'Phương thức',
+      key: 'method',
+      align: 'center',
+      cell: (row: User) => MAPPING_LOGIN_METHOD[row.method],
+    },
+    {
+      name: 'Xác thực',
+      center: true,
+      cell: (row: User) => (
+        <div className="form-switch">
+          <Input
+            type="switch"
+            checked={row.isVerified}
+            onChange={() => {
+              onVerifyUser(row);
+            }}
+          />
+        </div>
       ),
     },
     {
       name: 'Thời gian cập nhật',
       sortable: true,
       key: 'updatedAt',
-      cell: (row: User) => (
-        <div className="text-truncate">
-          {moment(row.updatedAt).format('DD/MM/YYYY - hh:mm')}
-        </div>
-      ),
+      cell: (row: User) => {
+        const updatedAt = new Date(row.updatedAt).toLocaleString();
+        return (
+          <>
+            <div id="updatedAt" className="text-truncate">
+              {updatedAt}
+            </div>
+            <UncontrolledTooltip target="updatedAt">
+              {updatedAt}
+            </UncontrolledTooltip>
+          </>
+        );
+      },
     },
     {
       name: 'Thao tác',
       center: true,
-      cell: (row) => (
+      cell: (row: User) => (
         <div className="d-flex justify-content-center align-items-center">
           <Button
             disabled={loading}
-            id="verifyUser"
+            id="editUser"
             size="sm"
             color="transparent"
             className="btn btn-icon"
-            onClick={() => onVerifyUser(row)}
+            onClick={() => setEditedUser(row)}
           >
-            <Shield className="font-medium-2" />
+            <Edit className="font-medium-2" />
           </Button>
 
-          <UncontrolledTooltip placement="top" target="verifyUser">
-            Xác thực tài khoản
+          <UncontrolledTooltip placement="top" target="editUser">
+            Chỉnh sửa
           </UncontrolledTooltip>
 
           <Button
@@ -188,11 +192,10 @@ const Table: React.FC<TableProps> = ({
   ];
 
   const handleSort = (sortObj, direction) => {
-    onChangeParams((prev) => ({
-      ...prev,
+    onChangeParams({
       sortBy: sortObj?.key,
       orderBy: direction?.toUpperCase?.(),
-    }));
+    });
   };
 
   return (
@@ -200,15 +203,14 @@ const Table: React.FC<TableProps> = ({
       <h3 className="mb-2">Danh sách người dùng</h3>
       <Card>
         <div className="react-dataTable">
-          <div className="px-2">
-            <TableHeader
-              {...{
-                ...tableHeaderProps,
-                keyword: params?.q,
-                onChangeParams,
-              }}
-            />
-          </div>
+          <TableHeader
+            {...{
+              ...tableHeaderProps,
+              params,
+              onChangeParams,
+            }}
+          />
+
           <UILoader blocking={loading}>
             <DataTable
               noHeader
@@ -224,9 +226,13 @@ const Table: React.FC<TableProps> = ({
             />
           </UILoader>
         </div>
+        <UserModal
+          title="Cập nhật thông tin người dùng"
+          visible={!!editedUser}
+          onClose={() => setEditedUser(null)}
+          user={editedUser}
+        />
       </Card>
     </>
   );
 };
-
-export default Table;
