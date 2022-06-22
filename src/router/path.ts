@@ -2,7 +2,15 @@ export const LOGIN = '/login';
 export const REGISTER = '/register';
 
 export const HOME = '/';
+
+// IAM
 export const USER_LIST = '/users';
+export const PERMISSION_LIST = '/permissions';
+export const ROUTE_LIST = '/routes';
+export const ROLE_LIST = '/roles';
+
+// Core
+export const COMPANY_LIST = '/companies';
 
 export const ADMIN = '/admin';
 export const SETTING = ADMIN + '/account-settings';

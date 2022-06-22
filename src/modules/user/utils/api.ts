@@ -5,12 +5,12 @@ export const userApi = {
   getUsers: async (params: GetUsersParams) => {
     return API.adminBffClient.get(`/users`, { params }).then((res) => res.data);
   },
-  updateUser: async (userId: number, data: UpdateUserRequest) => {
+  updateUser: async (id: number, data: UpdateUserRequest) => {
     return API.adminBffClient
-      .patch(`/users/${userId}`, data)
+      .patch(`/users/${id}`, data)
       .then((res) => res.data);
   },
-  deleteUser: async (userId: number) => {
-    return API.adminBffClient.delete(`/users/${userId}`);
+  deleteUser: async (id: number) => {
+    return API.adminBffClient.delete(`/users/${id}`);
   },
 };

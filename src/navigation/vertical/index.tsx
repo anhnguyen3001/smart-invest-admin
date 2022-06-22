@@ -1,6 +1,12 @@
-import { Home, Layers, Settings, User } from 'react-feather';
-import { ADMIN, SETTING, TEMPLATE_LIST, USER_LIST } from 'router/path';
-import { ACTION, APP, RESOURCES } from 'router/permission';
+import { Home, Key, Lock, Settings, Users, Book, Grid } from 'react-feather';
+import {
+  ADMIN,
+  COMPANY_LIST,
+  PERMISSION_LIST,
+  ROLE_LIST,
+  SETTING,
+  USER_LIST,
+} from 'router/path';
 
 const navigation = [
   {
@@ -13,13 +19,60 @@ const navigation = [
     },
   },
   {
-    id: 'userList',
-    title: 'Danh sách người dùng',
-    icon: <User size={20} />,
-    navLink: USER_LIST,
+    id: 'iam',
+    title: 'Quản lý người dùng',
+    icon: <Lock size={20} />,
     meta: {
       publicRoute: true,
     },
+    children: [
+      {
+        id: 'userList',
+        title: 'Người dùng',
+        icon: <Users size={20} />,
+        navLink: USER_LIST,
+        meta: {
+          publicRoute: true,
+        },
+      },
+      {
+        id: 'roleList',
+        title: 'Roles',
+        icon: <Key size={20} />,
+        navLink: ROLE_LIST,
+        meta: {
+          publicRoute: true,
+        },
+      },
+      {
+        id: 'permissionList',
+        title: 'Quyền',
+        icon: <Key size={20} />,
+        navLink: PERMISSION_LIST,
+        meta: {
+          publicRoute: true,
+        },
+      },
+    ],
+  },
+  {
+    id: 'core',
+    title: 'Quản lý nội dung',
+    icon: <Book size={20} />,
+    meta: {
+      publicRoute: true,
+    },
+    children: [
+      {
+        id: 'companyList',
+        title: 'Công ty',
+        icon: <Grid size={20} />,
+        navLink: COMPANY_LIST,
+        meta: {
+          publicRoute: true,
+        },
+      },
+    ],
   },
   {
     id: 'setting',
@@ -30,47 +83,6 @@ const navigation = [
       publicRoute: false,
       requiredOwnerMerchant: true,
     },
-  },
-  {
-    id: 'templateList',
-    title: 'Trang mẫu',
-    icon: <Layers size={20} />,
-    meta: {
-      publicRoute: false,
-      permission: {
-        app: APP.BUILDER_BFF,
-        resource: RESOURCES.TEMPLATE,
-        action: ACTION.READ_UI,
-      },
-    },
-    children: [
-      {
-        id: 'templateList',
-        title: 'Danh sách trang mẫu',
-        navLink: TEMPLATE_LIST,
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.TEMPLATE,
-            action: ACTION.READ,
-          },
-        },
-      },
-      {
-        id: 'category_templateList',
-        title: 'Danh mục',
-        navLink: '/template-categories',
-        meta: {
-          publicRoute: false,
-          permission: {
-            app: APP.BUILDER_BFF,
-            resource: RESOURCES.CATEGORY,
-            action: ACTION.READ,
-          },
-        },
-      },
-    ],
   },
 ];
 
