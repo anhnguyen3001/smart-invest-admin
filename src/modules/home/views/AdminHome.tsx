@@ -1,11 +1,5 @@
-import { CategorySelectNav } from 'modules/category';
-
 const AdminHome = () => {
-  return (
-    <>
-      <CategorySelectNav />
-    </>
-  );
+  return <>Home</>;
 };
 
 export default AdminHome;

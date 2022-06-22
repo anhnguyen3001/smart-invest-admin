@@ -9,7 +9,7 @@ export const permissionApi = {
   },
   updatePermission: async (id: number, data: UpdatePermissionRequest) => {
     return API.adminBffClient
-      .patch(`/users/${id}`, data)
+      .patch(`/permissions/${id}`, data)
       .then((res) => res.data);
   },
   deletePermission: async (id: number) => {

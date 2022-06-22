@@ -37,7 +37,7 @@ const navigation = [
       },
       {
         id: 'roleList',
-        title: 'Roles',
+        title: 'Role',
         icon: <Key size={20} />,
         navLink: ROLE_LIST,
         meta: {
