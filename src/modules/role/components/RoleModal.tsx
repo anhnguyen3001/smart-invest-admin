@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -11,43 +12,45 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import * as yup from 'yup';
-import {
-  CreatePermissionRequest,
-  Permission,
-  UpdatePermissionRequest,
-} from '../types';
+import { Role } from '../types';
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Vui lòng nhập tên quyền'),
-  code: yup.string().required('Vui lòng nhập mã quyền'),
+  name: yup.string().required('Vui lòng nhập tên role'),
+  code: yup.string().required('Vui lòng nhập mã role'),
 });
 
-interface PermissionModalProps {
+interface RoleForm {
+  name: string;
+  code: string;
+  permissionsId: { label: string; value: number }[] | null;
+}
+
+interface RoleModalProps {
   visible?: boolean;
   onClose: () => void;
   title?: string;
-  permission?: Permission;
+  role?: Role;
 }
 
-const PermissionModal: React.FC<PermissionModalProps> = ({
+const RoleModal: React.FC<RoleModalProps> = ({
   visible,
   onClose,
   title,
-  permission,
+  role,
 }) => {
   const { reset, control, handleSubmit, setValue } = useForm({
     defaultValues: {
       name: null,
       code: null,
+      permissionIds: null,
     },
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
   });
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (
-    _: UpdatePermissionRequest | CreatePermissionRequest,
-  ) => {
+  const onSubmit = async (data: RoleForm) => {
+    console.log(data);
     if (!loading) {
       try {
         setLoading(true);
@@ -63,9 +66,9 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
     if (!visible) {
       reset();
     } else {
-      if (permission) {
-        setValue('name', permission.name);
-        setValue('code', permission.code);
+      if (role) {
+        setValue('name', role.name);
+        setValue('code', role.code);
       }
 
       const handlePressEnter = (event) => {
@@ -92,7 +95,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
       <ModalBody>
         <Form>
           <div className="mb-1">
-            <Label for="name">Tên quyền</Label>
+            <Label for="name">Tên role</Label>
             <Controller
               control={control}
               name="name"
@@ -101,15 +104,31 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
           </div>
 
           <div className="mb-1">
-            <Label for="code">Mã quyền</Label>
+            <Label for="code">Mã role</Label>
             <Controller
               control={control}
               name="code"
-              render={({ field }) => (
-                <Input {...field} readOnly={!!permission} />
-              )}
+              render={({ field }) => <Input {...field} readOnly={!!role} />}
             />
           </div>
+
+          {!!role && (
+            <div className="mb-1">
+              <Label for="permissionIds">Quyền</Label>
+              <Controller
+                name="permissionIds"
+                control={control}
+                render={({ field: { ref, ...rest } }) => (
+                  <PermissionSelect
+                    isMulti
+                    isClearable
+                    placeholder="Chọn quyền"
+                    {...rest}
+                  />
+                )}
+              />
+            </div>
+          )}
 
           <div className="text-end mt-2">
             <Button className="me-1" outline type="reset" onClick={onClose}>
@@ -125,4 +144,4 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   );
 };
 
-export default PermissionModal;
+export default RoleModal;

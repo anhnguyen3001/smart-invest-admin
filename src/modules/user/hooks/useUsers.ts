@@ -61,11 +61,11 @@ export const useUsers = () => {
 
   const { users, pagination } = data?.data || {};
 
-  const onChangeParams = (params: GetUsersParams) => {
+  const onChangeParams = (params: GetUsersParams, isResetPage = true) => {
     setParams((prev) => ({
       ...prev,
       ...params,
-      ...(params?.page !== undefined && { page: 1 }),
+      ...(isResetPage && { page: 1 }),
     }));
   };
 

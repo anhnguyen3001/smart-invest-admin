@@ -1,20 +1,20 @@
 import { PAGE_SIZE_OPTIONS } from 'modules/core';
 import { Plus } from 'react-feather';
 import { Button, Col, Input, Row } from 'reactstrap';
-import { GetPermissionsParams } from '../../types';
+import { GetRolesParams } from '../../types';
 
 export interface TableHeaderProps {
-  params: GetPermissionsParams;
+  params: GetRolesParams;
   onChangeKeyword: (keyword: string) => void;
-  onChangeParams: (params: GetPermissionsParams, isResetPage?: boolean) => void;
-  onCreatePermission: () => void;
+  onChangeParams: (params: GetRolesParams, isResetPage?: boolean) => void;
+  onCreateRole: () => void;
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({
+export const TableHeader: React.FC<TableHeaderProps> = ({
   params,
   onChangeKeyword,
   onChangeParams,
-  onCreatePermission,
+  onCreateRole,
 }) => {
   return (
     <div className="m-1 ms-2">
@@ -44,7 +44,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         >
           <Input
             value={params?.q}
-            placeholder="Tìm kiếm theo tên hoặc mã quyền"
+            placeholder="Tìm kiếm theo tên hoặc mã role"
             type="text"
             className="w-50 mb-sm-0 mb-1 me-sm-1 me-0"
             onChange={(e) => onChangeKeyword(e.target.value)}
@@ -53,15 +53,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             size="sm"
             className="d-flex align-items-center"
             color="primary"
-            onClick={onCreatePermission}
+            onClick={onCreateRole}
           >
             <Plus className="me-50" />
-            Thêm quyền mới
+            Thêm role mới
           </Button>
         </Col>
       </Row>
     </div>
   );
 };
-
-export default TableHeader;

@@ -17,7 +17,7 @@ const statusOptions = [
 export interface TableHeaderProps {
   params: GetUsersParams;
   onChangeKeyword: (keyword: string) => void;
-  onChangeParams: (params: GetUsersParams) => void;
+  onChangeParams: (params: GetUsersParams, isResetPage?: boolean) => void;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({

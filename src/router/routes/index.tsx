@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { HOME, LOGIN, REGISTER } from 'router/path';
 import AdminHome from '../../modules/home/views/AdminHome';
 import { PermissionRoutes } from './permission';
+import { RoleRoutes } from './role';
 import { UserRoutes } from './user';
 
 const DefaultRoute = '/';
@@ -46,6 +47,7 @@ const Routes = [
   },
   ...UserRoutes,
   ...PermissionRoutes,
+  ...RoleRoutes,
 ];
 
 export { DefaultRoute, Routes };

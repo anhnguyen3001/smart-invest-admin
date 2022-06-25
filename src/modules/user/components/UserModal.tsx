@@ -90,9 +90,7 @@ const UserModal: React.FC<UserModalProps> = ({
       <ModalBody>
         <Form>
           <div className="mb-1">
-            <Label className="form-label" for="email">
-              Email
-            </Label>
+            <Label for="email">Email</Label>
             <Controller
               control={control}
               name="email"
@@ -101,9 +99,7 @@ const UserModal: React.FC<UserModalProps> = ({
           </div>
 
           <div className="mb-1">
-            <Label className="form-label" for="username">
-              Tên người dùng
-            </Label>
+            <Label for="username">Tên người dùng</Label>
             <Controller
               control={control}
               name="username"
@@ -112,9 +108,7 @@ const UserModal: React.FC<UserModalProps> = ({
           </div>
 
           <div className="mb-1 ">
-            <Label className="form-label" for="isVerified">
-              Trạng thái
-            </Label>
+            <Label for="isVerified">Trạng thái</Label>
             <div className="form-switch">
               <Controller
                 control={control}

@@ -2,6 +2,7 @@ import debounce from 'lodash.debounce';
 import { OrderBy } from 'modules/core/types';
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
+import { mockPermissions } from '../data';
 import { GetPermissionsParams, Permission } from '../types';
 import { permissionApi } from '../utils/api';
 
@@ -12,24 +13,6 @@ const initialParams: GetPermissionsParams = {
   orderBy: OrderBy.DESC,
 };
 
-const mockPermissions: Permission[] = [
-  {
-    id: 1,
-    name: 'Xem Slug',
-    code: 'slug:read',
-  },
-  {
-    id: 2,
-    name: 'Thêm Popup',
-    code: 'popup:create',
-  },
-  {
-    id: 1,
-    name: 'Xem Popup',
-    code: 'popup:read',
-  },
-];
-
 export const usePermissions = () => {
   const [params, setParams] = useState<GetPermissionsParams>(initialParams);
 
@@ -38,7 +21,7 @@ export const usePermissions = () => {
   const { data, error, mutate } = useSWR(
     ['/permissions', JSON.stringify(params)],
     () => {
-      return { data: { permissions: [], pagination: null } };
+      return { data: { permissions: mockPermissions, pagination: null } };
       // return permissionApi.getPermissions(params);
     },
   );
@@ -52,16 +35,16 @@ export const usePermissions = () => {
 
   const { permissions, pagination } = data?.data || {};
 
-  const onChangeParams = (params: GetPermissionsParams) => {
+  const onChangeParams = (params: GetPermissionsParams, isResetPage = true) => {
     setParams((prev) => ({
       ...prev,
       ...params,
-      ...(params?.page !== undefined && { page: 1 }),
+      ...(isResetPage && { page: 1 }),
     }));
   };
 
   return {
-    permissions: mockPermissions as Permission[],
+    permissions: (permissions || []) as Permission[],
     loading: (!data && !error) || loading,
     onChangeKeyword: debounceSearch,
     setLoading,

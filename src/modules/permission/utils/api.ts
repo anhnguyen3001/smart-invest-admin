@@ -2,6 +2,11 @@ import API from 'services/request';
 import { GetPermissionsParams, UpdatePermissionRequest } from '../types';
 
 export const permissionApi = {
+  getAllPermissions: async () => {
+    return API.adminBffClient
+      .get(`/permissions/get-all`)
+      .then((res) => res.data);
+  },
   getPermissions: async (params: GetPermissionsParams) => {
     return API.adminBffClient
       .get(`/permissions`, { params })

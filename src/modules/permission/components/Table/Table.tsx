@@ -145,10 +145,13 @@ export const Table: React.FC<TableProps> = ({
   ];
 
   const handleSort = (sortObj, direction) => {
-    onChangeParams({
-      sortBy: sortObj?.key,
-      orderBy: direction?.toUpperCase?.(),
-    });
+    onChangeParams(
+      {
+        sortBy: sortObj?.key,
+        orderBy: direction?.toUpperCase?.(),
+      },
+      false,
+    );
   };
 
   return (

@@ -62,9 +62,7 @@ const Login = () => {
               onSubmit={handleSubmit(onLogin)}
             >
               <div className="mb-1">
-                <Label className="form-label" for="username">
-                  Số điện thoại
-                </Label>
+                <Label for="username">Số điện thoại</Label>
                 <Controller
                   control={control}
                   name="email"
@@ -82,9 +80,7 @@ const Login = () => {
                 )}
               </div>
               <div className="mb-2">
-                <Label className="form-label" for="password">
-                  Mật khẩu
-                </Label>
+                <Label for="password">Mật khẩu</Label>
                 <Controller
                   control={control}
                   name="password"
