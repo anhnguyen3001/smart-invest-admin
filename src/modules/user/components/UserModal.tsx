@@ -30,11 +30,11 @@ const UserModal: React.FC<UserModalProps> = ({
 }) => {
   const { reset, control, handleSubmit, setValue } = useForm({
     defaultValues: {
-      email: null,
-      password: null,
-      method: null,
-      username: null,
-      isVerified: null,
+      email: '',
+      password: '',
+      method: '',
+      username: '',
+      isVerified: true,
       roleId: null,
     },
     mode: 'onChange',

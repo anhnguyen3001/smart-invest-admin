@@ -4,6 +4,7 @@ import { HOME, LOGIN, REGISTER } from 'router/path';
 import AdminHome from '../../modules/home/views/AdminHome';
 import { PermissionRoutes } from './permission';
 import { RoleRoutes } from './role';
+import { RouteRoutes } from './route';
 import { UserRoutes } from './user';
 
 const DefaultRoute = '/';
@@ -48,6 +49,7 @@ const Routes = [
   ...UserRoutes,
   ...PermissionRoutes,
   ...RoleRoutes,
+  ...RouteRoutes,
 ];
 
 export { DefaultRoute, Routes };

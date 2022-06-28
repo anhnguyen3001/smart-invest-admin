@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   Form,
+  FormFeedback,
   Input,
   Label,
   Modal,
@@ -15,14 +16,14 @@ import * as yup from 'yup';
 import { Role } from '../types';
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Vui lòng nhập tên role'),
-  code: yup.string().required('Vui lòng nhập mã role'),
+  name: yup.string().trim().required('Vui lòng nhập tên role'),
+  code: yup.string().trim().required('Vui lòng nhập mã role'),
 });
 
 interface RoleForm {
   name: string;
   code: string;
-  permissionsId: { label: string; value: number }[] | null;
+  permissionsIds: { label: string; value: number }[] | null;
 }
 
 interface RoleModalProps {
@@ -38,11 +39,17 @@ const RoleModal: React.FC<RoleModalProps> = ({
   title,
   role,
 }) => {
-  const { reset, control, handleSubmit, setValue } = useForm({
+  const {
+    reset,
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      name: null,
-      code: null,
-      permissionIds: null,
+      name: '',
+      code: '',
+      permissionIds: '',
     },
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -99,8 +106,11 @@ const RoleModal: React.FC<RoleModalProps> = ({
             <Controller
               control={control}
               name="name"
-              render={({ field }) => <Input {...field} />}
+              render={({ field }) => (
+                <Input invalid={!!errors.name} {...field} />
+              )}
             />
+            {errors.name && <FormFeedback>{errors.name.message}</FormFeedback>}
           </div>
 
           <div className="mb-1">
@@ -108,8 +118,11 @@ const RoleModal: React.FC<RoleModalProps> = ({
             <Controller
               control={control}
               name="code"
-              render={({ field }) => <Input {...field} readOnly={!!role} />}
+              render={({ field }) => (
+                <Input invalid={!!errors.code} {...field} readOnly={!!role} />
+              )}
             />
+            {errors.code && <FormFeedback>{errors.code.message}</FormFeedback>}
           </div>
 
           {!!role && (

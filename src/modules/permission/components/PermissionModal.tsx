@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   Form,
+  FormFeedback,
   Input,
   Label,
   Modal,
@@ -18,8 +19,8 @@ import {
 } from '../types';
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Vui lòng nhập tên quyền'),
-  code: yup.string().required('Vui lòng nhập mã quyền'),
+  name: yup.string().trim().required('Vui lòng nhập tên quyền'),
+  code: yup.string().trim().required('Vui lòng nhập mã quyền'),
 });
 
 interface PermissionModalProps {
@@ -35,10 +36,16 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   title,
   permission,
 }) => {
-  const { reset, control, handleSubmit, setValue } = useForm({
+  const {
+    reset,
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      name: null,
-      code: null,
+      name: '',
+      code: '',
     },
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -96,8 +103,11 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
             <Controller
               control={control}
               name="name"
-              render={({ field }) => <Input {...field} />}
+              render={({ field }) => (
+                <Input {...field} invalid={!!errors.name} />
+              )}
             />
+            {errors.name && <FormFeedback>{errors.name.message}</FormFeedback>}
           </div>
 
           <div className="mb-1">
@@ -106,9 +116,14 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
               control={control}
               name="code"
               render={({ field }) => (
-                <Input {...field} readOnly={!!permission} />
+                <Input
+                  {...field}
+                  readOnly={!!permission}
+                  invalid={!!errors.code}
+                />
               )}
             />
+            {errors.code && <FormFeedback>{errors.code.message}</FormFeedback>}
           </div>
 
           <div className="text-end mt-2">

@@ -1,9 +1,20 @@
-import { Home, Key, Lock, Settings, Users, Book, Grid } from 'react-feather';
+import {
+  Home,
+  Key,
+  Lock,
+  Settings,
+  Users,
+  Book,
+  Grid,
+  Compass,
+  UserCheck,
+} from 'react-feather';
 import {
   ADMIN,
   COMPANY_LIST,
   PERMISSION_LIST,
   ROLE_LIST,
+  ROUTE_LIST,
   SETTING,
   USER_LIST,
 } from 'router/path';
@@ -38,7 +49,7 @@ const navigation = [
       {
         id: 'roleList',
         title: 'Role',
-        icon: <Key size={20} />,
+        icon: <UserCheck size={20} />,
         navLink: ROLE_LIST,
         meta: {
           publicRoute: true,
@@ -49,6 +60,15 @@ const navigation = [
         title: 'Quyền',
         icon: <Key size={20} />,
         navLink: PERMISSION_LIST,
+        meta: {
+          publicRoute: true,
+        },
+      },
+      {
+        id: 'routeList',
+        title: 'Route',
+        icon: <Compass size={20} />,
+        navLink: ROUTE_LIST,
         meta: {
           publicRoute: true,
         },

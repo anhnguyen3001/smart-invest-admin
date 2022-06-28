@@ -1,5 +1,9 @@
 import API from 'services/request';
-import { GetPermissionsParams, UpdatePermissionRequest } from '../types';
+import {
+  CreatePermissionRequest,
+  GetPermissionsParams,
+  UpdatePermissionRequest,
+} from '../types';
 
 export const permissionApi = {
   getAllPermissions: async () => {
@@ -10,6 +14,11 @@ export const permissionApi = {
   getPermissions: async (params: GetPermissionsParams) => {
     return API.adminBffClient
       .get(`/permissions`, { params })
+      .then((res) => res.data);
+  },
+  createPermission: async (id: number, data: CreatePermissionRequest) => {
+    return API.adminBffClient
+      .post(`/permissions/${id}`, data)
       .then((res) => res.data);
   },
   updatePermission: async (id: number, data: UpdatePermissionRequest) => {

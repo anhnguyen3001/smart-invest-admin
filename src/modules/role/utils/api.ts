@@ -1,9 +1,14 @@
 import API from 'services/request';
-import { GetRolesParams, UpdateRoleRequest } from '../types';
+import { CreateRoleRequest, GetRolesParams, UpdateRoleRequest } from '../types';
 
 export const roleApi = {
   getRoles: async (params: GetRolesParams) => {
     return API.adminBffClient.get(`/roles`, { params }).then((res) => res.data);
+  },
+  createRole: async (id: number, data: CreateRoleRequest) => {
+    return API.adminBffClient
+      .post(`/roles/${id}`, data)
+      .then((res) => res.data);
   },
   updateRole: async (id: number, data: UpdateRoleRequest) => {
     return API.adminBffClient

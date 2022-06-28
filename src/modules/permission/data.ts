@@ -12,7 +12,7 @@ export const mockPermissions: Permission[] = [
     code: 'popup:create',
   },
   {
-    id: 1,
+    id: 3,
     name: 'Xem Popup',
     code: 'popup:read',
   },
