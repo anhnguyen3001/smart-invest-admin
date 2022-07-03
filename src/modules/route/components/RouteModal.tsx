@@ -137,13 +137,12 @@ const RouteModal: React.FC<RouteModalProps> = ({
   const onSubmit = async (inputValue: RouteForm) => {
     const { regex, permissionId, method, name, ...rest } = inputValue;
 
-    const submitData = {
+    const _ = {
       name: `${routePrefix}${name}`,
       method: method.value,
       permissionId: permissionId?.value,
       ...rest,
     };
-    console.log(submitData);
 
     if (!loading) {
       try {

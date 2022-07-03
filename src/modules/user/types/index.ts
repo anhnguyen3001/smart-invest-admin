@@ -1,7 +1,7 @@
 import { BaseSearchQueryParams } from 'modules/core/types';
 
 export type GetUsersParams = BaseSearchQueryParams & {
-  isVerified?: boolean;
+  isVerified?: string;
 };
 
 export enum LoginMethodEnum {
@@ -18,7 +18,6 @@ export interface Role {
 export interface User {
   id: number;
   email: string;
-  password?: string;
   username: string;
   method: LoginMethodEnum;
   isVerified: boolean;
@@ -27,7 +26,6 @@ export interface User {
 }
 
 export interface UpdateUserRequest {
-  password?: string;
   isVerified?: boolean;
   roleId?: number;
 }

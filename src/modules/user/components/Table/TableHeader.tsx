@@ -4,12 +4,8 @@ import { Col, Input, Row } from 'reactstrap';
 import { selectThemeColors } from 'utility/Utils';
 import { GetUsersParams } from '../../types';
 
-const MAPPING_STATUS = {
-  true: true,
-  false: false,
-};
 const statusOptions = [
-  { label: 'Chọn trạng thái', value: '' },
+  { label: 'Tất cả trạng thái', value: '' },
   { label: 'Đã xác thực', value: 'true' },
   { label: 'Chưa xác thực', value: 'false' },
 ];
@@ -52,11 +48,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           className="d-flex align-items-md-center justify-content-md-end justify-content-start flex-sm-nowrap flex-wrap flex-sm-row flex-column"
         >
           <Input
+            defaultValue=""
             value={params?.q}
             placeholder="Tìm kiếm"
             type="text"
             className="w-50 mb-sm-0 mb-1 me-sm-1 me-0"
-            onChange={(e) => onChangeKeyword(e.target.value)}
+            onChange={(e) => {
+              onChangeKeyword(e.target.value);
+            }}
           />
           <Select
             theme={selectThemeColors}
@@ -72,7 +71,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             }
             options={statusOptions}
             onChange={(newValue) =>
-              onChangeParams({ isVerified: MAPPING_STATUS[newValue.value] })
+              onChangeParams({ isVerified: newValue.value })
             }
           />
         </Col>

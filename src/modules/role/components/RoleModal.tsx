@@ -56,8 +56,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
   });
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data: RoleForm) => {
-    console.log(data);
+  const onSubmit = async (_: RoleForm) => {
     if (!loading) {
       try {
         setLoading(true);

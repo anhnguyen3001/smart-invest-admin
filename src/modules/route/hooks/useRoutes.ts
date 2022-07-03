@@ -2,7 +2,7 @@ import debounce from 'lodash.debounce';
 import { OrderBy } from 'modules/core/types';
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
-import { GetRoutesParams, MethodEnum, Route } from '../types';
+import { GetRoutesParams, Route } from '../types';
 import { routeApi } from '../utils/api';
 
 const initialParams: GetRoutesParams = {
@@ -12,21 +12,6 @@ const initialParams: GetRoutesParams = {
   orderBy: OrderBy.DESC,
 };
 
-const mockRoutes: Route[] = [
-  {
-    id: 1,
-    name: '/v1/popups/{}',
-    regUri: '/v1/popups/[0-9]+',
-    method: MethodEnum.post,
-  },
-  {
-    id: 2,
-    name: '/v1/popups/{}',
-    regUri: '/v1/popups/[0-9]+',
-    method: MethodEnum.get,
-  },
-];
-
 export const useRoutes = () => {
   const [params, setParams] = useState<GetRoutesParams>(initialParams);
 
@@ -35,8 +20,7 @@ export const useRoutes = () => {
   const { data, error, mutate } = useSWR(
     ['/routes', JSON.stringify(params)],
     () => {
-      return { data: { routes: mockRoutes, pagination: null } };
-      // return routeApi.getRoutes(params);
+      return routeApi.getRoutes(params);
     },
   );
 
@@ -58,7 +42,7 @@ export const useRoutes = () => {
   };
 
   return {
-    routes: (routes || []) as Route[],
+    routes: routes as Route[],
     loading: (!data && !error) || loading,
     onChangeKeyword: debounceSearch,
     setLoading,

@@ -31,7 +31,6 @@ const UserModal: React.FC<UserModalProps> = ({
   const { reset, control, handleSubmit, setValue } = useForm({
     defaultValues: {
       email: '',
-      password: '',
       method: '',
       username: '',
       isVerified: true,
@@ -88,7 +87,7 @@ const UserModal: React.FC<UserModalProps> = ({
         {title}
       </ModalHeader>
       <ModalBody>
-        <Form>
+        <Form onSubmit={handleSubmit(onUpdateUser)}>
           <div className="mb-1">
             <Label for="email">Email</Label>
             <Controller
@@ -124,7 +123,7 @@ const UserModal: React.FC<UserModalProps> = ({
             <Button className="me-1" outline type="reset" onClick={onClose}>
               Hủy
             </Button>
-            <Button color="primary" onClick={handleSubmit(onUpdateUser)}>
+            <Button color="primary" type="submit">
               Cập nhật
             </Button>
           </div>

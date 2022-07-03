@@ -2,7 +2,6 @@ import debounce from 'lodash.debounce';
 import { OrderBy } from 'modules/core/types';
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
-import { mockPermissions } from '../data';
 import { GetPermissionsParams, Permission } from '../types';
 import { permissionApi } from '../utils/api';
 
@@ -21,8 +20,7 @@ export const usePermissions = () => {
   const { data, error, mutate } = useSWR(
     ['/permissions', JSON.stringify(params)],
     () => {
-      return { data: { permissions: mockPermissions, pagination: null } };
-      // return permissionApi.getPermissions(params);
+      return permissionApi.getPermissions(params);
     },
   );
 

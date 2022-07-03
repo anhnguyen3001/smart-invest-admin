@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { isLoggedIn, getAccessToken, handleResponseError } from 'utility/Utils';
+import { handleResponseError } from 'utility/Utils';
 
 const { apiServices } = window.config;
 
@@ -44,7 +44,7 @@ const identityClient = axios.create({
 });
 
 const getAuthorization = () => {
-  return isLoggedIn() ? `Bearer ${getAccessToken()}` : '';
+  // return isLoggedIn() ? `Bearer ${getAccessToken()}` : '';
 };
 
 // Do something before request is sent

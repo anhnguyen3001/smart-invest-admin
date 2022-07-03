@@ -12,24 +12,6 @@ const initialParams: GetRolesParams = {
   orderBy: OrderBy.DESC,
 };
 
-const mockRoles: Role[] = [
-  {
-    id: 1,
-    name: 'Xem Slug',
-    code: 'slug:read',
-  },
-  {
-    id: 2,
-    name: 'Thêm Popup',
-    code: 'popup:create',
-  },
-  {
-    id: 3,
-    name: 'Xem Popup',
-    code: 'popup:read',
-  },
-];
-
 export const useRoles = () => {
   const [params, setParams] = useState<GetRolesParams>(initialParams);
 
@@ -38,8 +20,7 @@ export const useRoles = () => {
   const { data, error, mutate } = useSWR(
     ['/roles', JSON.stringify(params)],
     () => {
-      return { data: { roles: [], pagination: null } };
-      // return roleApi.getRoles(params);
+      return roleApi.getRoles(params);
     },
   );
 
@@ -61,7 +42,7 @@ export const useRoles = () => {
   };
 
   return {
-    roles: mockRoles as Role[],
+    roles: roles as Role[],
     loading: (!data && !error) || loading,
     onChangeKeyword: debounceSearch,
     setLoading,
