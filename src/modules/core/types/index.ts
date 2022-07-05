@@ -10,3 +10,8 @@ export interface BaseSearchQueryParams {
   orderBy?: OrderBy;
   sortBy?: string;
 }
+
+export interface SelectValue<T> {
+  label: string;
+  value: T;
+}

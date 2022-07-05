@@ -1,6 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { SelectValue } from 'modules/core/types';
+import { RolenSelect } from 'modules/role/components/RoleSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
   Button,
   Form,
@@ -11,9 +14,17 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import * as yup from 'yup';
-import { UpdateUserRequest, User } from '../types';
+import { User } from '../types';
+import { userApi } from '../utils/api';
 
 const validationSchema = yup.object().shape({});
+
+interface UserForm {
+  email: string;
+  name: string;
+  status: boolean;
+  roleId: SelectValue<number> | null;
+}
 
 interface UserModalProps {
   visible?: boolean;
@@ -41,13 +52,22 @@ const UserModal: React.FC<UserModalProps> = ({
   });
   const [loading, setLoading] = useState(false);
 
-  const onUpdateUser = async (_: UpdateUserRequest) => {
+  const onUpdateUser = async (inputValue: UserForm) => {
+    const submitData = {
+      roleId: inputValue.roleId.value,
+    };
+
     if (!loading) {
       try {
         setLoading(true);
+
+        await userApi.updateUser(user.id, submitData);
+        toast.success('Cập nhật thành công', { position: 'top-right' });
       } catch (e) {
         console.error(e);
       } finally {
+        setLoading(false);
+
         onClose();
       }
     }
@@ -62,7 +82,7 @@ const UserModal: React.FC<UserModalProps> = ({
         setValue('username', user.username);
         setValue('method', user.method);
         setValue('isVerified', user.isVerified);
-        setValue('roleId', user.role?.id);
+        setValue('roleId', { label: user.role?.name, value: user.role?.id });
       }
 
       const handlePressEnter = (event) => {
@@ -117,6 +137,17 @@ const UserModal: React.FC<UserModalProps> = ({
                 )}
               />
             </div>
+          </div>
+
+          <div className="mb-1">
+            <Label for="roleId">Role</Label>
+            <Controller
+              name="roleId"
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
+                <RolenSelect isClearable placeholder="Chọn role" {...rest} />
+              )}
+            />
           </div>
 
           <div className="text-end mt-2">

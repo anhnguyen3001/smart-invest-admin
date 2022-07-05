@@ -2,6 +2,9 @@ import API from 'services/request';
 import { CreateRoleRequest, GetRolesParams, UpdateRoleRequest } from '../types';
 
 export const roleApi = {
+  getAllRoles: async () => {
+    return API.adminBffClient.get(`/roles/get-all`).then((res) => res.data);
+  },
   getRoles: async (params: GetRolesParams) => {
     return API.adminBffClient.get(`/roles`, { params }).then((res) => res.data);
   },

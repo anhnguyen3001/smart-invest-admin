@@ -114,7 +114,12 @@ export const Table: React.FC<TableProps> = ({
         </>
       ),
     },
-
+    {
+      name: 'Role',
+      key: 'rolemethod',
+      align: 'center',
+      cell: (row: User) => row.role?.name,
+    },
     {
       name: 'Phương thức',
       key: 'method',

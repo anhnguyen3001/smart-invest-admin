@@ -16,6 +16,7 @@ import * as yup from 'yup';
 import { Role } from '../types';
 import { roleApi } from '../utils/api';
 import toast from 'react-hot-toast';
+import { SelectValue } from 'modules/core/types';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên role'),
@@ -25,7 +26,7 @@ const validationSchema = yup.object().shape({
 interface RoleForm {
   name: string;
   code: string;
-  permissionsIds: { label: string; value: number }[] | null;
+  permissionsIds: SelectValue<number>[] | null;
 }
 
 interface RoleModalProps {
