@@ -1,9 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { SUCCESS_MSG } from 'modules/core';
+import { Button } from 'modules/core/components';
+import { SelectValue } from 'modules/core/types';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
-  Button,
   Form,
   FormFeedback,
   Input,
@@ -15,9 +18,6 @@ import {
 import * as yup from 'yup';
 import { Role } from '../types';
 import { roleApi } from '../utils/api';
-import toast from 'react-hot-toast';
-import { SelectValue } from 'modules/core/types';
-import { SUCCESS_MSG } from 'modules/core';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên role'),
@@ -168,7 +168,11 @@ const RoleModal: React.FC<RoleModalProps> = ({
             <Button className="me-1" outline type="reset" onClick={onClose}>
               Hủy
             </Button>
-            <Button color="primary" onClick={handleSubmit(onSubmit)}>
+            <Button
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+              loading={loading}
+            >
               Lưu
             </Button>
           </div>

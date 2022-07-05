@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import { PATTERN_VALIDATION, SUCCESS_MSG } from 'modules/core';
+import { Button } from 'modules/core/components';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select, { MultiValue } from 'react-select';
 import {
-  Button,
   Form,
   FormFeedback,
   Input,
@@ -297,7 +297,11 @@ const RouteModal: React.FC<RouteModalProps> = ({
             <Button className="me-1" outline type="reset" onClick={onClose}>
               Hủy
             </Button>
-            <Button color="primary" onClick={handleSubmit(onSubmit)}>
+            <Button
+              loading={loading}
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+            >
               Lưu
             </Button>
           </div>

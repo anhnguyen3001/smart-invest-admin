@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SUCCESS_MSG } from 'modules/core';
+import { Button } from 'modules/core/components';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import {
-  Button,
   Form,
   FormFeedback,
   Input,
@@ -144,7 +144,11 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
             <Button className="me-1" outline type="reset" onClick={onClose}>
               Hủy
             </Button>
-            <Button color="primary" onClick={handleSubmit(onSubmit)}>
+            <Button
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+              loading={loading}
+            >
               Lưu
             </Button>
           </div>
