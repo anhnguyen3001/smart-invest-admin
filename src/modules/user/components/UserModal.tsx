@@ -1,18 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SelectValue } from 'modules/core/types';
+import { Button } from 'modules/core/components';
 import { RolenSelect } from 'modules/role/components/RoleSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import {
-  Button,
-  Form,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-} from 'reactstrap';
+import { Form, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as yup from 'yup';
 import { User } from '../types';
 import { userApi } from '../utils/api';
@@ -62,12 +55,13 @@ const UserModal: React.FC<UserModalProps> = ({
         setLoading(true);
 
         await userApi.updateUser(user.id, submitData);
-        toast.success('Cập nhật thành công', { position: 'top-right' });
+        toast.success('Cập nhật thông tin thành công', {
+          position: 'top-right',
+        });
       } catch (e) {
         console.error(e);
       } finally {
         setLoading(false);
-
         onClose();
       }
     }
@@ -154,7 +148,7 @@ const UserModal: React.FC<UserModalProps> = ({
             <Button className="me-1" outline type="reset" onClick={onClose}>
               Hủy
             </Button>
-            <Button color="primary" type="submit">
+            <Button color="primary" type="submit" loading={loading}>
               Cập nhật
             </Button>
           </div>

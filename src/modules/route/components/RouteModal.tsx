@@ -4,6 +4,7 @@ import { PATTERN_VALIDATION } from 'modules/core';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import Select, { MultiValue } from 'react-select';
 import {
   Button,
@@ -19,6 +20,7 @@ import {
 } from 'reactstrap';
 import * as yup from 'yup';
 import { MethodEnum, Route } from '../types';
+import { routeApi } from '../utils/api';
 
 const routePrefix = '/';
 const dynamicRegPlaceholder = '{}';
@@ -137,7 +139,7 @@ const RouteModal: React.FC<RouteModalProps> = ({
   const onSubmit = async (inputValue: RouteForm) => {
     const { regex, permissionId, method, name, ...rest } = inputValue;
 
-    const _ = {
+    const submitData = {
       name: `${routePrefix}${name}`,
       method: method.value,
       permissionId: permissionId?.value,
@@ -147,6 +149,14 @@ const RouteModal: React.FC<RouteModalProps> = ({
     if (!loading) {
       try {
         setLoading(true);
+
+        if (route) {
+          await routeApi.createRoute(submitData);
+          toast.success('Tạo route thành công', { position: 'top-right' });
+        } else {
+          await routeApi.updateRoute(route.id, submitData);
+          toast.success('Cập nhật route thành công', { position: 'top-right' });
+        }
       } catch (e) {
         console.error(e);
       } finally {

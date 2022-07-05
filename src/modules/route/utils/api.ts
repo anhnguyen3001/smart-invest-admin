@@ -11,10 +11,8 @@ export const routeApi = {
       .get(`/routes`, { params })
       .then((res) => res.data);
   },
-  createRoute: async (id: number, data: CreateRouteRequest) => {
-    return API.adminBffClient
-      .post(`/routes/${id}`, data)
-      .then((res) => res.data);
+  createRoute: async (data: CreateRouteRequest) => {
+    return API.adminBffClient.post('/routes', data).then((res) => res.data);
   },
   updateRoute: async (id: number, data: UpdateRouteRequest) => {
     return API.adminBffClient
