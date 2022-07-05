@@ -14,6 +14,8 @@ import {
 } from 'reactstrap';
 import * as yup from 'yup';
 import { Role } from '../types';
+import { roleApi } from '../utils/api';
+import toast from 'react-hot-toast';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên role'),
@@ -56,9 +58,20 @@ const RoleModal: React.FC<RoleModalProps> = ({
   });
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (_: RoleForm) => {
+  const onSubmit = async (data: RoleForm) => {
+    const submitData = {
+      ...data,
+      permissionIds: data.permissionsIds?.map(({ value }) => value),
+    };
     if (!loading) {
       try {
+        if (role) {
+          await roleApi.updateRole(role.id, submitData);
+          toast.success('Cập nhật role thành công', { position: 'top-right' });
+        } else {
+          await roleApi.createRole(submitData);
+          toast.success('Tạo role thành công', { position: 'top-right' });
+        }
         setLoading(true);
       } catch (e) {
         console.error(e);
@@ -106,7 +119,11 @@ const RoleModal: React.FC<RoleModalProps> = ({
               control={control}
               name="name"
               render={({ field }) => (
-                <Input invalid={!!errors.name} {...field} />
+                <Input
+                  invalid={!!errors.name}
+                  placeholder="Nhập tên role"
+                  {...field}
+                />
               )}
             />
             {errors.name && <FormFeedback>{errors.name.message}</FormFeedback>}
@@ -118,29 +135,32 @@ const RoleModal: React.FC<RoleModalProps> = ({
               control={control}
               name="code"
               render={({ field }) => (
-                <Input invalid={!!errors.code} {...field} readOnly={!!role} />
+                <Input
+                  invalid={!!errors.code}
+                  {...field}
+                  placeholder="Nhập mã role"
+                  readOnly={!!role}
+                />
               )}
             />
             {errors.code && <FormFeedback>{errors.code.message}</FormFeedback>}
           </div>
 
-          {!!role && (
-            <div className="mb-1">
-              <Label for="permissionIds">Quyền</Label>
-              <Controller
-                name="permissionIds"
-                control={control}
-                render={({ field: { ref, ...rest } }) => (
-                  <PermissionSelect
-                    isMulti
-                    isClearable
-                    placeholder="Chọn quyền"
-                    {...rest}
-                  />
-                )}
-              />
-            </div>
-          )}
+          <div className="mb-1">
+            <Label for="permissionIds">Quyền</Label>
+            <Controller
+              name="permissionIds"
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
+                <PermissionSelect
+                  isMulti
+                  isClearable
+                  placeholder="Chọn quyền"
+                  {...rest}
+                />
+              )}
+            />
+          </div>
 
           <div className="text-end mt-2">
             <Button className="me-1" outline type="reset" onClick={onClose}>
