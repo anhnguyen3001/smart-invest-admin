@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { PATTERN_VALIDATION } from 'modules/core';
+import { PATTERN_VALIDATION, SUCCESS_MSG } from 'modules/core';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -151,11 +151,11 @@ const RouteModal: React.FC<RouteModalProps> = ({
         setLoading(true);
 
         if (route) {
-          await routeApi.createRoute(submitData);
-          toast.success('Tạo route thành công', { position: 'top-right' });
-        } else {
           await routeApi.updateRoute(route.id, submitData);
-          toast.success('Cập nhật route thành công', { position: 'top-right' });
+          toast.success(SUCCESS_MSG.UPDATE_ROUTE, { position: 'top-right' });
+        } else {
+          await routeApi.createRoute(submitData);
+          toast.success(SUCCESS_MSG.CREATE_ROUTE, { position: 'top-right' });
         }
       } catch (e) {
         console.error(e);

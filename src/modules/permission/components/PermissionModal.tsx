@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { SUCCESS_MSG } from 'modules/core';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
   Button,
   Form,
@@ -12,16 +14,18 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import * as yup from 'yup';
-import {
-  CreatePermissionRequest,
-  Permission,
-  UpdatePermissionRequest,
-} from '../types';
+import { Permission } from '../types';
+import { permissionApi } from '../utils/api';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên quyền'),
   code: yup.string().trim().required('Vui lòng nhập mã quyền'),
 });
+
+interface PermissionForm {
+  name: string;
+  code: string;
+}
 
 interface PermissionModalProps {
   visible?: boolean;
@@ -42,7 +46,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<PermissionForm>({
     defaultValues: {
       name: '',
       code: '',
@@ -52,12 +56,22 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   });
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (
-    _: UpdatePermissionRequest | CreatePermissionRequest,
-  ) => {
+  const onSubmit = async (inputValue: PermissionForm) => {
     if (!loading) {
       try {
         setLoading(true);
+
+        if (permission) {
+          await permissionApi.updatePermission(permission.id, inputValue);
+          toast.success(SUCCESS_MSG.UPDATE_PERMISSION, {
+            position: 'top-right',
+          });
+        } else {
+          await permissionApi.createPermission(inputValue);
+          toast.success(SUCCESS_MSG.CREATE_PERMISSION, {
+            position: 'top-right',
+          });
+        }
       } catch (e) {
         console.error(e);
       } finally {

@@ -16,9 +16,9 @@ export const permissionApi = {
       .get(`/permissions`, { params })
       .then((res) => res.data);
   },
-  createPermission: async (id: number, data: CreatePermissionRequest) => {
+  createPermission: async (data: CreatePermissionRequest) => {
     return API.adminBffClient
-      .post(`/permissions/${id}`, data)
+      .post('/permissions', data)
       .then((res) => res.data);
   },
   updatePermission: async (id: number, data: UpdatePermissionRequest) => {

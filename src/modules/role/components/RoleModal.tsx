@@ -17,6 +17,7 @@ import { Role } from '../types';
 import { roleApi } from '../utils/api';
 import toast from 'react-hot-toast';
 import { SelectValue } from 'modules/core/types';
+import { SUCCESS_MSG } from 'modules/core';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên role'),
@@ -68,10 +69,10 @@ const RoleModal: React.FC<RoleModalProps> = ({
       try {
         if (role) {
           await roleApi.updateRole(role.id, submitData);
-          toast.success('Cập nhật role thành công', { position: 'top-right' });
+          toast.success(SUCCESS_MSG.UPDATE_ROLE, { position: 'top-right' });
         } else {
           await roleApi.createRole(submitData);
-          toast.success('Tạo role thành công', { position: 'top-right' });
+          toast.success(SUCCESS_MSG.CREATE_ROLE, { position: 'top-right' });
         }
         setLoading(true);
       } catch (e) {
