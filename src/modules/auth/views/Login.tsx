@@ -16,7 +16,7 @@ import {
   Label,
   Spinner,
 } from 'reactstrap';
-import { HOME, REGISTER } from 'router/path';
+import { REGISTER } from 'router/path';
 import * as yup from 'yup';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { useLogin } from '../hooks';
@@ -50,9 +50,13 @@ const Login = () => {
       <div className="auth-inner my-2">
         <Card className="mb-0">
           <CardBody>
-            <Link className="brand-logo" to={HOME}>
-              <img alt="" style={{ maxWidth: 96, height: 'auto' }} src={logo} />
-            </Link>
+            <div className="text-center mb-1">
+              <img
+                alt="brand logo"
+                style={{ maxWidth: 96, height: 'auto' }}
+                src={logo}
+              />
+            </div>
             <CardTitle tag="h2" className="mb-1 auth-title text-center">
               Đăng nhập
             </CardTitle>
@@ -62,7 +66,7 @@ const Login = () => {
               onSubmit={handleSubmit(onLogin)}
             >
               <div className="mb-1">
-                <Label for="username">Số điện thoại</Label>
+                <Label for="username">Email</Label>
                 <Controller
                   control={control}
                   name="email"

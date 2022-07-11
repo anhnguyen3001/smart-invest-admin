@@ -1,16 +1,28 @@
+import { useAuth } from 'modules/core';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { HOME } from 'router/path';
 import { IAM_AUTH_ERROR_CODE } from '../constants/code';
 import { LoginRequest } from '../types';
 import { authApi } from '../utils/api';
 
 export const useLogin = () => {
+  const history = useHistory();
+
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState();
+
+  const { fetchUser, setAccessToken } = useAuth();
 
   const onLogin = async (data: LoginRequest) => {
     try {
       setLoading(true);
-      await authApi.login(data);
+      const res = await authApi.login(data);
+
+      setAccessToken(res.data.accessToken);
+      await fetchUser();
+
+      history.push(HOME);
     } catch (error) {
       setLoading(false);
 
@@ -19,7 +31,7 @@ export const useLogin = () => {
 
       switch (code) {
         case IAM_AUTH_ERROR_CODE.USERNAME_PASSWORD_NOT_CORRECT:
-          errMsg = 'Số điện thoai hoặc mật khẩu không đúng!';
+          errMsg = 'Email hoặc mật khẩu không đúng!';
           break;
         case IAM_AUTH_ERROR_CODE.ACCOUNT_NOT_ACTIVATE:
           errMsg = 'Tài khoản không hợp lệ!';

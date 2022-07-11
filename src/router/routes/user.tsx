@@ -8,7 +8,7 @@ export const UserRoutes = [
     path: USER_LIST,
     component: <UserList />,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
     },
   },
 ];
