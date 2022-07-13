@@ -1,6 +1,8 @@
-import { useAuth } from 'modules/core';
+import { useUser } from 'modules/user/hooks';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { handleUpdateAccessToken } from 'redux/authentication';
 import { HOME } from 'router/path';
 import { IAM_AUTH_ERROR_CODE } from '../constants/code';
 import { LoginRequest } from '../types';
@@ -9,17 +11,20 @@ import { authApi } from '../utils/api';
 export const useLogin = () => {
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState();
 
-  const { fetchUser, setAccessToken } = useAuth();
+  const { fetchUser } = useUser();
 
   const onLogin = async (data: LoginRequest) => {
     try {
       setLoading(true);
       const res = await authApi.login(data);
 
-      setAccessToken(res.data.accessToken);
+      dispatch(handleUpdateAccessToken(res.data.accessToken));
+
       await fetchUser();
 
       history.push(HOME);

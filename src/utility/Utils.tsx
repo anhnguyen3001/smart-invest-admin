@@ -346,7 +346,11 @@ export const swalWarningAction = (swalOptions, callback, successMessage) => {
   });
 };
 
-export const checkPermission = (permission, userPermissions = []) => {
-  const strPermission = buildPermission(permission);
-  return userPermissions.some((p) => p.startsWith(strPermission));
+export const checkPermission = (metaData, user) => {
+  if (metaData?.publicRoute !== false) return true;
+
+  const { permission } = metaData || {};
+  if (!permission) return !!user;
+
+  return (user?.permissions || []).some((p) => p.startsWith(permission));
 };

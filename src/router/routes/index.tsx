@@ -1,6 +1,6 @@
 import { LAYOUT } from 'configs/constants';
 import { lazy } from 'react';
-import { HOME, LOGIN, REGISTER } from 'router/path';
+import { HOME, LOGIN, NOT_FOUND, REGISTER } from 'router/path';
 import AdminHome from '../../modules/home/views/AdminHome';
 import { PermissionRoutes } from './permission';
 import { RoleRoutes } from './role';
@@ -11,6 +11,8 @@ const DefaultRoute = '/';
 
 const Login = lazy(() => import('../../modules/auth/views/Login'));
 const Register = lazy(() => import('../../modules/auth/views/Register'));
+
+const NotFound = lazy(() => import('../../modules/core/views/404'));
 
 const Error = lazy(() => import('../../views/Error'));
 
@@ -42,6 +44,13 @@ const Routes = [
   {
     path: '/error',
     component: <Error />,
+    meta: {
+      layout: LAYOUT.blank,
+    },
+  },
+  {
+    path: NOT_FOUND,
+    component: <NotFound />,
     meta: {
       layout: LAYOUT.blank,
     },

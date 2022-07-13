@@ -16,13 +16,8 @@ export const authApi = {
   },
   register: async (body) => {
     const { data } = await API.publicAdminBffClient.post(
-      '/v1/auth/register',
+      '/auth/register',
       body,
-      {
-        headers: {
-          'x-client-id': iam.clientId,
-        },
-      },
     );
     return data;
   },

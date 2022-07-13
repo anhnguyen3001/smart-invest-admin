@@ -1,13 +1,12 @@
 import SpinnerComponent from '@core/components/spinner/Fallback-spinner';
 import { LS_KEY } from 'modules/core';
-import { userApi } from 'modules/user/utils/api';
+import { useUser } from 'modules/user/hooks';
 import { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch } from 'react-router-dom';
 import {
   handleUpdateAccessToken,
   handleUpdateInitingIam,
-  handleUpdateUser,
 } from 'redux/authentication';
 import { useAppSelector } from 'redux/store';
 import { setupInterceptor } from 'services/request';
@@ -19,6 +18,8 @@ const App = () => {
 
   const accessToken = useAppSelector((state) => state.auth.accessToken);
   const initingIam = useAppSelector((state) => state.auth.initingIam);
+
+  const { fetchUser } = useUser();
 
   useEffect(() => {
     const { accessToken } = JSON.parse(
@@ -37,19 +38,15 @@ const App = () => {
   useEffect(() => {
     setupInterceptor(accessToken);
 
-    const fetchUser = async () => {
-      try {
-        const res = await userApi.me();
-
-        dispatch(handleUpdateUser(res.data.user));
+    const initUser = async () => {
+      const error = await fetchUser();
+      if (!error) {
         dispatch(handleUpdateInitingIam(false));
-      } catch (e) {
-        console.error(e);
       }
     };
 
     if (accessToken) {
-      fetchUser();
+      initUser();
     }
 
     // eslint-disable-next-line

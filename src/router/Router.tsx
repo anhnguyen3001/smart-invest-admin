@@ -21,13 +21,14 @@ const Router = ({ routes }) => {
         <BlankLayout>
           <Suspense fallback={<SpinnerComponent />}>
             <Switch>
-              {routes.map(({ component, ...rest }, index) => {
+              {routes.map((route, index) => {
+                const { component, ...rest } = route;
                 const RouteTag = rest?.meta?.publicRoute
                   ? PublicRoute
                   : PrivateRoute;
                 return (
                   <Route exact key={index} {...rest}>
-                    <RouteTag>
+                    <RouteTag route={route}>
                       <Suspense fallback={<SpinnerComponent />}>
                         {component}
                       </Suspense>
@@ -56,13 +57,15 @@ const Router = ({ routes }) => {
     const routeComponent = (
       <Suspense fallback={<SpinnerComponent />}>
         <Switch>
-          {routes.map(({ component, ...rest }, index) => {
+          {routes.map((route, index) => {
+            const { component, ...rest } = route;
+
             const RouteTag = rest?.meta?.publicRoute
               ? PublicRoute
               : PrivateRoute;
             return (
               <Route exact key={index} {...rest}>
-                <RouteTag>
+                <RouteTag route={route}>
                   <LayoutWrapper>
                     <Suspense fallback={<SpinnerComponent />}>
                       {component}

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
+import { RouteProps } from './common';
 
-const PublicRoute = ({ children }) => {
+const PublicRoute: React.FC<RouteProps> = ({ children }) => {
   return <Suspense fallback={null}> {children} </Suspense>;
 };
 
