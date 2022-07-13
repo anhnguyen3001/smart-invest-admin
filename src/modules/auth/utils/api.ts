@@ -15,8 +15,7 @@ export const authApi = {
     return data;
   },
   register: async (body) => {
-    // API doc: https://api-doc.vnpay.vn/project-doc/draft/saas_market/presentation_layer/market_bff/version/da404108/operations/register-user-with-merchant
-    const { data } = await API.publicMarketBffClient.post(
+    const { data } = await API.publicAdminBffClient.post(
       '/v1/auth/register',
       body,
       {
@@ -28,8 +27,7 @@ export const authApi = {
     return data;
   },
   verifyPhone: async (body) => {
-    // API doc: https://api-doc.vnpay.vn/project-doc/draft/saas_market/presentation_layer/market_bff/version/da404108/operations/verify-phone
-    const { data } = await API.publicMarketBffClient.post(
+    const { data } = await API.publicAdminBffClient.post(
       '/v1/auth/verify-otp',
       body,
       {

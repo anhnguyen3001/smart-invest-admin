@@ -1,4 +1,4 @@
-import { imageApi } from 'services/image';
+// import { imageApi } from 'services/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -21,8 +21,8 @@ export const useUploadImage = (maxSize = 2, allows = ['JPG', 'PNG', 'GIF']) => {
   const handleUploadImage = async (file) => {
     try {
       setLoading(true);
-      const res = await imageApi.uploadImage(file);
-      return res?.image_url;
+      // const res = await imageApi.uploadImage(file);
+      // return res?.image_url;
     } finally {
       setLoading(false);
     }
