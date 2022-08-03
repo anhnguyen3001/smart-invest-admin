@@ -269,8 +269,8 @@ export const normalizeSeparator = (
   return value;
 };
 
-export const buildPermission = ({ app, resource, action }) => {
-  return [app, resource, action].join(':');
+export const buildPermission = ({ resource, action }) => {
+  return [resource, action].join(':');
 };
 
 export const swalNoticeAction = (title, text) => {
@@ -348,9 +348,13 @@ export const swalWarningAction = (swalOptions, callback, successMessage) => {
 
 export const checkPermission = (metaData, user) => {
   if (metaData?.publicRoute !== false) return true;
-
   const { permission } = metaData || {};
   if (!permission) return !!user;
 
-  return (user?.permissions || []).some((p) => p.startsWith(permission));
+  const strPermission = buildPermission(permission);
+  return (user?.permissions || []).some((p) => p.startsWith(strPermission));
+};
+
+export const getEnv = (key: string) => {
+  return process.env[`REACT_APP_${key}`] || '';
 };

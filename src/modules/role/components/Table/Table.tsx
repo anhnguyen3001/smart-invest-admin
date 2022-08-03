@@ -73,7 +73,7 @@ export const Table: React.FC<TableProps> = ({
 
   const columns = [
     {
-      name: 'Tên role',
+      name: 'Tên vai trò',
       sortable: true,
       key: 'name',
       minWidth: '150px',
@@ -89,7 +89,7 @@ export const Table: React.FC<TableProps> = ({
       ),
     },
     {
-      name: 'Mã role',
+      name: 'Mã vai trò',
       sortable: true,
       key: 'code',
       minWidth: '250px',
@@ -156,7 +156,7 @@ export const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <h3 className="mb-2">Danh sách quyền</h3>
+      <h3 className="mb-2">Danh sách vai trò</h3>
       <Card>
         <div className="react-dataTable">
           <TableHeader
@@ -184,13 +184,14 @@ export const Table: React.FC<TableProps> = ({
           </UILoader>
         </div>
         <RoleModal
-          title={editedRole ? 'Cập nhật role' : 'Tạo mới role'}
+          title={editedRole ? 'Cập nhật vai trò' : 'Tạo mới vai trò'}
           visible={visibleModal}
           onClose={() => {
             setVisibleModal(false);
             setEditedRole(null);
           }}
           role={editedRole}
+          onAfterClose={mutateRoles}
         />
       </Card>
     </>

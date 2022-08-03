@@ -1,18 +1,12 @@
 import axios from 'axios';
-import { handleResponseError } from 'utility/Utils';
-
-const { apiServices } = window.config;
+import { getEnv, handleResponseError } from 'utility/Utils';
 
 const publicAdminBffClient = axios.create({
-  baseURL: apiServices.smartInvestBff,
+  baseURL: getEnv('BFF_API'),
 });
 
 const adminBffClient = axios.create({
-  baseURL: apiServices.smartInvestBff,
-});
-
-const identityClient = axios.create({
-  baseURL: apiServices.identity,
+  baseURL: getEnv('BFF_API'),
 });
 
 // Any status code that lie within the range of 2xx cause this function to trigger
@@ -40,9 +34,4 @@ export const setupInterceptor = (accessToken: string) => {
 };
 
 // eslint-disable-next-line
-export default {
-  publicAdminBffClient,
-  adminBffClient,
-
-  identityClient,
-};
+export { publicAdminBffClient, adminBffClient };

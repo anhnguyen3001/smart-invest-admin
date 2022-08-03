@@ -1,7 +1,7 @@
 import InputPasswordToggle from '@core/components/input-password-toggle';
 import '@core/scss/react/pages/page-authentication.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
-import logo from 'assets/images/logo/logo.png';
+import themeConfig from 'configs/themeConfig';
 import { PATTERN_VALIDATION } from 'modules/core';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -54,7 +54,7 @@ const Login = () => {
               <img
                 alt="brand logo"
                 style={{ maxWidth: 96, height: 'auto' }}
-                src={logo}
+                src={themeConfig.app.appLogoImage}
               />
             </div>
             <CardTitle tag="h2" className="mb-1 auth-title text-center">

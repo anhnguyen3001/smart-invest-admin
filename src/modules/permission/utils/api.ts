@@ -1,4 +1,4 @@
-import API from 'services/request';
+import { adminBffClient } from 'services/request';
 import {
   CreatePermissionRequest,
   GetPermissionsParams,
@@ -7,26 +7,22 @@ import {
 
 export const permissionApi = {
   getAllPermissions: async () => {
-    return API.adminBffClient
-      .get(`/permissions/get-all`)
-      .then((res) => res.data);
+    return adminBffClient.get(`/permissions/get-all`).then((res) => res.data);
   },
   getPermissions: async (params: GetPermissionsParams) => {
-    return API.adminBffClient
+    return adminBffClient
       .get(`/permissions`, { params })
       .then((res) => res.data);
   },
   createPermission: async (data: CreatePermissionRequest) => {
-    return API.adminBffClient
-      .post('/permissions', data)
-      .then((res) => res.data);
+    return adminBffClient.post('/permissions', data).then((res) => res.data);
   },
   updatePermission: async (id: number, data: UpdatePermissionRequest) => {
-    return API.adminBffClient
+    return adminBffClient
       .patch(`/permissions/${id}`, data)
       .then((res) => res.data);
   },
   deletePermission: async (id: number) => {
-    return API.adminBffClient.delete(`/permissions/${id}`);
+    return adminBffClient.delete(`/permissions/${id}`);
   },
 };

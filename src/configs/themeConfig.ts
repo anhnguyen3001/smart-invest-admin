@@ -4,7 +4,7 @@
 const themeConfig = {
   app: {
     appName: '',
-    appLogoImage: require('assets/images/logo/logo.png').default,
+    appLogoImage: require('assets/images/logo.png').default,
     placeholderImage: require('assets/images/default_image.jpg').default,
   },
   layout: {

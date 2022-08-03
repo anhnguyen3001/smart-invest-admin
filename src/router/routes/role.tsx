@@ -8,7 +8,7 @@ export const RoleRoutes = [
     path: ROLE_LIST,
     component: <RoleList />,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
     },
   },
 ];

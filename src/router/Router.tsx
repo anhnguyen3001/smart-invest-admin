@@ -7,8 +7,9 @@ import { LAYOUT } from 'configs/constants';
 import HorizontalLayout from 'layouts/HorizontalLayout';
 import VerticalLayout from 'layouts/VerticalLayout';
 import { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { useFilterRoute } from 'utility/hooks';
+import { USER_LIST } from './path';
 
 const Router = ({ routes }) => {
   // ** Hooks
@@ -96,6 +97,7 @@ const Router = ({ routes }) => {
         {renderBlankRoutes()}
         {renderLayoutRoutes(LAYOUT.vertical)}
         {renderLayoutRoutes(LAYOUT.horizontal)}
+        <Redirect to={USER_LIST} />
       </Switch>
     </Suspense>
   );

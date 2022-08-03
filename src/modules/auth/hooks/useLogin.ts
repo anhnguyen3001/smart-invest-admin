@@ -1,3 +1,4 @@
+import { LS_KEY } from 'modules/core';
 import { useUser } from 'modules/user/hooks';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -23,6 +24,7 @@ export const useLogin = () => {
       setLoading(true);
       const res = await authApi.login(data);
 
+      localStorage.setItem(LS_KEY.accessToken, res.data.accessToken);
       dispatch(handleUpdateAccessToken(res.data.accessToken));
 
       await fetchUser();

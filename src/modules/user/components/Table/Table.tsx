@@ -240,6 +240,7 @@ export const Table: React.FC<TableProps> = ({
           visible={!!editedUser}
           onClose={() => setEditedUser(null)}
           user={editedUser}
+          onAfterClose={mutateUsers}
         />
       </Card>
     </>

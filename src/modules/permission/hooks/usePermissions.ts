@@ -22,6 +22,7 @@ export const usePermissions = () => {
     () => {
       return permissionApi.getPermissions(params);
     },
+    { revalidateOnFocus: false },
   );
 
   const debounceSearch = useCallback(() => {

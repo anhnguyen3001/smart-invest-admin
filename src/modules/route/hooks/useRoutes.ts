@@ -22,6 +22,7 @@ export const useRoutes = () => {
     () => {
       return routeApi.getRoutes(params);
     },
+    { revalidateOnFocus: false },
   );
 
   const debounceSearch = useCallback(() => {

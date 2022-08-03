@@ -38,7 +38,7 @@ const Routes = [
     path: HOME,
     component: <AdminHome />,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
     },
   },
   {

@@ -23,19 +23,12 @@ export const useUserInfo = () => {
     return null;
   };
 
-  const getUserInfoAsync = async () => {
-    const userInfo = await fetchUserInfo();
-    if (userInfo) localStorage.setItem(KEY_USER_LS, JSON.stringify(userInfo));
-    return userInfo;
-  };
-
   const removeUserInfo = () => {
     localStorage.removeItem(KEY_USER_LS);
   };
 
   return {
     getUserInfoSync,
-    getUserInfoAsync,
     canBeCallPrivateApi,
     removeUserInfo,
   };

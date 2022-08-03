@@ -10,7 +10,7 @@ export const PermissionRoutes = [
     path: PERMISSION_LIST,
     component: <PermissionList />,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
     },
   },
 ];

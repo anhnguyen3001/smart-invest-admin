@@ -22,6 +22,7 @@ export const useRoles = () => {
     () => {
       return roleApi.getRoles(params);
     },
+    { revalidateOnFocus: false },
   );
 
   const debounceSearch = useCallback(() => {

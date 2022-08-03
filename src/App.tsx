@@ -10,6 +10,7 @@ import {
 } from 'redux/authentication';
 import { useAppSelector } from 'redux/store';
 import { setupInterceptor } from 'services/request';
+import { useAxios } from 'utility/hooks/useAxios';
 import Router from './router/Router';
 import { Routes } from './router/routes';
 
@@ -20,12 +21,11 @@ const App = () => {
   const initingIam = useAppSelector((state) => state.auth.initingIam);
 
   const { fetchUser } = useUser();
+  useAxios();
 
   useEffect(() => {
-    const { accessToken } = JSON.parse(
-      localStorage.getItem(LS_KEY.userInfo) || '{}',
-    );
-
+    const accessToken = localStorage.getItem(LS_KEY.accessToken);
+    console.log(accessToken);
     if (accessToken) {
       dispatch(handleUpdateAccessToken(accessToken));
     } else {
@@ -36,8 +36,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setupInterceptor(accessToken);
-
     const initUser = async () => {
       const error = await fetchUser();
       if (!error) {

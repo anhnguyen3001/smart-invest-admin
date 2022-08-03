@@ -56,7 +56,7 @@ const VerticalMenuHeader = (props) => {
   return (
     <div className="navbar-header">
       <ul className="nav navbar-nav flex-row">
-        <li className="nav-item me-auto">
+        <li className="nav-item mx-auto">
           <NavLink
             to={user ? getHomeRouteForLoggedInUser(user.role) : '/'}
             className="navbar-brand"

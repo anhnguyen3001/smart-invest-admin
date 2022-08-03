@@ -114,7 +114,6 @@ const HorizontalLayout = (props) => {
   if (!isMounted) {
     return null;
   }
-
   return (
     <div
       className={classnames(

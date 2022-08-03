@@ -35,6 +35,7 @@ interface RoleModalProps {
   onClose: () => void;
   title?: string;
   role?: Role;
+  onAfterClose?: () => void;
 }
 
 const RoleModal: React.FC<RoleModalProps> = ({
@@ -42,6 +43,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
   onClose,
   title,
   role,
+  onAfterClose,
 }) => {
   const {
     reset,
@@ -66,6 +68,8 @@ const RoleModal: React.FC<RoleModalProps> = ({
       permissionIds: data.permissionsIds?.map(({ value }) => value),
     };
     if (!loading) {
+      setLoading(true);
+
       try {
         if (role) {
           await roleApi.updateRole(role.id, submitData);
@@ -74,10 +78,11 @@ const RoleModal: React.FC<RoleModalProps> = ({
           await roleApi.createRole(submitData);
           toast.success(SUCCESS_MSG.CREATE_ROLE, { position: 'top-right' });
         }
-        setLoading(true);
+        onAfterClose?.();
       } catch (e) {
         console.error(e);
       } finally {
+        setLoading(false);
         onClose();
       }
     }
@@ -116,14 +121,14 @@ const RoleModal: React.FC<RoleModalProps> = ({
       <ModalBody>
         <Form>
           <div className="mb-1">
-            <Label for="name">Tên role</Label>
+            <Label for="name">Tên vai trò</Label>
             <Controller
               control={control}
               name="name"
               render={({ field }) => (
                 <Input
                   invalid={!!errors.name}
-                  placeholder="Nhập tên role"
+                  placeholder="Nhập tên vai trò"
                   {...field}
                 />
               )}
@@ -132,7 +137,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
           </div>
 
           <div className="mb-1">
-            <Label for="code">Mã role</Label>
+            <Label for="code">Mã vai trò</Label>
             <Controller
               control={control}
               name="code"
@@ -140,7 +145,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
                 <Input
                   invalid={!!errors.code}
                   {...field}
-                  placeholder="Nhập mã role"
+                  placeholder="Nhập mã vai trò"
                   readOnly={!!role}
                 />
               )}

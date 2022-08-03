@@ -44,7 +44,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
         >
           <Input
             value={params?.q}
-            placeholder="Tìm kiếm theo tên hoặc mã role"
+            placeholder="Tìm kiếm theo tên hoặc mã vai trò"
             type="text"
             className="w-50 mb-sm-0 mb-1 me-sm-1 me-0"
             onChange={(e) => onChangeKeyword(e.target.value)}
@@ -56,7 +56,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
             onClick={onCreateRole}
           >
             <Plus className="me-50" />
-            Thêm role mới
+            Thêm vai trò mới
           </Button>
         </Col>
       </Row>

@@ -3,11 +3,10 @@ export const APP = {
 };
 
 export const RESOURCES = {
-  TEMPLATE: 'template',
-  CATEGORY: 'category',
-  BLOCK: 'block',
-  POPUP: 'popup',
-  DOMAIN: 'domain',
+  USER: 'user',
+  ROLE: 'role',
+  PERMISSION: 'permission',
+  ROUTE: 'route',
 };
 
 export const ACTION = {
@@ -15,5 +14,11 @@ export const ACTION = {
   READ: 'read',
   UPDATE: 'update',
   DELETE: 'delete',
-  READ_UI: 'read:ui',
+};
+
+export const MAPPING_ACTION = {
+  [ACTION.CREATE]: 'Tạo',
+  [ACTION.READ]: 'Xem',
+  [ACTION.UPDATE]: 'Cập nhật',
+  [ACTION.DELETE]: 'Xóa',
 };

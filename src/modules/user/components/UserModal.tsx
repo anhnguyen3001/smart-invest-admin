@@ -24,6 +24,7 @@ interface UserModalProps {
   onClose: () => void;
   title?: string;
   user?: User;
+  onAfterClose?: () => void;
 }
 
 const UserModal: React.FC<UserModalProps> = ({
@@ -31,6 +32,7 @@ const UserModal: React.FC<UserModalProps> = ({
   onClose,
   title,
   user,
+  onAfterClose,
 }) => {
   const { reset, control, handleSubmit, setValue } = useForm({
     defaultValues: {
@@ -58,6 +60,7 @@ const UserModal: React.FC<UserModalProps> = ({
         toast.success('Cập nhật thông tin thành công', {
           position: 'top-right',
         });
+        onAfterClose?.();
       } catch (e) {
         console.error(e);
       } finally {

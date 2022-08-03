@@ -8,7 +8,7 @@ export const RouteRoutes = [
     path: ROUTE_LIST,
     component: <RouteList />,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
     },
   },
 ];

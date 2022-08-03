@@ -44,7 +44,7 @@ export const Table: React.FC<TableProps> = ({
 
   const onDelete = (row: Route) => {
     swalDeleteAction(
-      `Xóa role ${row.name}?`,
+      `Xóa đường dẫn ${row.name}?`,
       'Dữ liệu sẽ không thể khôi phục sau khi xóa!',
       () => deleteRoute(row.id),
     );
@@ -73,17 +73,17 @@ export const Table: React.FC<TableProps> = ({
 
   const columns = [
     {
-      name: 'Route',
+      name: 'Đường dẫn',
       sortable: true,
-      key: 'name',
+      key: 'regUri',
       minWidth: '150px',
       cell: (row: Route) => (
         <>
-          <div id="name" className="text-truncate">
-            {row.name}
+          <div id="regUri" className="text-truncate">
+            {row.regUri}
           </div>
-          <UncontrolledTooltip placement="top" target="name">
-            {row.name}
+          <UncontrolledTooltip placement="top" target="regUri">
+            {row.regUri}
           </UncontrolledTooltip>
         </>
       ),
@@ -151,7 +151,7 @@ export const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <h3 className="mb-2">Danh sách route</h3>
+      <h3 className="mb-2">Danh sách đường dẫn</h3>
       <Card>
         <div className="react-dataTable">
           <TableHeader
@@ -179,13 +179,14 @@ export const Table: React.FC<TableProps> = ({
           </UILoader>
         </div>
         <RouteModal
-          title={editedRoute ? 'Cập nhật route' : 'Tạo mới route'}
+          title={editedRoute ? 'Cập nhật đường dẫn' : 'Tạo mới đường dẫn'}
           visible={visibleModal}
           onClose={() => {
             setVisibleModal(false);
             setEditedRoute(null);
           }}
           route={editedRoute}
+          onAfterClose={mutateRoutes}
         />
       </Card>
     </>

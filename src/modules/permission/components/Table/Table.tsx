@@ -191,6 +191,7 @@ export const Table: React.FC<TableProps> = ({
             setEditedPermission(null);
           }}
           permission={editedPermission}
+          onAfterClose={mutatePermissions}
         />
       </Card>
     </>

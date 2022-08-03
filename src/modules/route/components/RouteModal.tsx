@@ -59,6 +59,7 @@ interface RouteModalProps {
   onClose: () => void;
   title?: string;
   route?: Route;
+  onAfterClose?: () => void;
 }
 
 const RouteModal: React.FC<RouteModalProps> = ({
@@ -66,6 +67,7 @@ const RouteModal: React.FC<RouteModalProps> = ({
   onClose,
   title,
   route,
+  onAfterClose,
 }) => {
   const [selectDynamicRegex, setSelectDynamicRegex] = useState(false);
 
@@ -157,9 +159,11 @@ const RouteModal: React.FC<RouteModalProps> = ({
           await routeApi.createRoute(submitData);
           toast.success(SUCCESS_MSG.CREATE_ROUTE, { position: 'top-right' });
         }
+        onAfterClose?.();
       } catch (e) {
         console.error(e);
       } finally {
+        setLoading(false);
         onClose();
       }
     }

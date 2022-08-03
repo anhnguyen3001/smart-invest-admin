@@ -27,7 +27,7 @@ const Navbar = (props) => {
     <Fragment>
       <div className="bookmark-wrapper d-flex align-items-center">
         <ul className="navbar-nav d-xl-none">
-          <NavItem className="mobile-menu me-auto">
+          <NavItem className="mobile-menu mx-auto">
             <NavLink
               className="nav-menu-main menu-toggle hidden-xs is-active"
               onClick={() => setMenuVisibility(true)}
