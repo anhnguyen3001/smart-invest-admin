@@ -1,6 +1,8 @@
-import { PAGE_SIZE_OPTIONS } from 'modules/core';
+import { ComponentWithPermission } from 'components';
+import { PAGE_SIZE_OPTIONS } from 'constants/index';
 import { Plus } from 'react-feather';
 import { Button, Col, Input, Row } from 'reactstrap';
+import { ACTION, RESOURCES } from 'router/permission';
 import { GetPermissionsParams } from '../../types';
 
 export interface TableHeaderProps {
@@ -49,15 +51,22 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             className="w-50 mb-sm-0 mb-1 me-sm-1 me-0"
             onChange={(e) => onChangeKeyword(e.target.value)}
           />
-          <Button
-            size="sm"
-            className="d-flex align-items-center"
-            color="primary"
-            onClick={onCreatePermission}
+          <ComponentWithPermission
+            permission={{
+              resource: RESOURCES.PERMISSION,
+              action: ACTION.CREATE,
+            }}
           >
-            <Plus className="me-50" />
-            Thêm quyền mới
-          </Button>
+            <Button
+              size="sm"
+              className="d-flex align-items-center"
+              color="primary"
+              onClick={onCreatePermission}
+            >
+              <Plus className="me-50" />
+              Thêm quyền mới
+            </Button>
+          </ComponentWithPermission>
         </Col>
       </Row>
     </div>

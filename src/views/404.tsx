@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { useAppSelector } from 'redux/store';
 import { HOME, LOGIN } from 'router/path';
-import NotFoundImage from '../../../assets/images/pages/404.svg';
+import NotFoundImage from '../assets/images/pages/404.svg';
 
 const NotFound: React.FC = () => {
   const history = useHistory();

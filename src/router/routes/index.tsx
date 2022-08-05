@@ -12,9 +12,7 @@ const DefaultRoute = '/';
 const Login = lazy(() => import('../../modules/auth/views/Login'));
 const Register = lazy(() => import('../../modules/auth/views/Register'));
 
-const NotFound = lazy(() => import('../../modules/core/views/404'));
-
-const Error = lazy(() => import('../../views/Error'));
+const NotFound = lazy(() => import('../../views/404'));
 
 // ** Merge Routes
 const Routes = [
@@ -39,13 +37,6 @@ const Routes = [
     component: <AdminHome />,
     meta: {
       publicRoute: false,
-    },
-  },
-  {
-    path: '/error',
-    component: <Error />,
-    meta: {
-      layout: LAYOUT.blank,
     },
   },
   {

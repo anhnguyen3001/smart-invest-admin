@@ -15,3 +15,8 @@ export interface SelectValue<T> {
   label: string;
   value: T;
 }
+
+export interface AppPermisison {
+  resource: string;
+  action: string;
+}

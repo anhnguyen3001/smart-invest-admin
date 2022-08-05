@@ -3,8 +3,6 @@ import PublicRoute from '@core/components/routes/PublicRoute';
 import SpinnerComponent from '@core/components/spinner/Fallback-spinner';
 import BlankLayout from '@core/layouts/BlankLayout';
 import LayoutWrapper from '@core/layouts/components/layout-wrapper';
-import { LAYOUT } from 'configs/constants';
-import HorizontalLayout from 'layouts/HorizontalLayout';
 import VerticalLayout from 'layouts/VerticalLayout';
 import { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -13,8 +11,7 @@ import { USER_LIST } from './path';
 
 const Router = ({ routes }) => {
   // ** Hooks
-  const { blankLayoutRoutes, verticalLayoutRoutes, horizontalLayoutRoutes } =
-    useFilterRoute(routes);
+  const { blankLayoutRoutes, verticalLayoutRoutes } = useFilterRoute(routes);
 
   const renderBlankRoutes = () => {
     return (
@@ -44,21 +41,11 @@ const Router = ({ routes }) => {
     );
   };
 
-  const renderLayoutRoutes = (layout) => {
-    const mapRoutesToLayout = () => {
-      switch (layout) {
-        case LAYOUT.vertical:
-          return [verticalLayoutRoutes, VerticalLayout];
-        case LAYOUT.horizontal:
-          return [horizontalLayoutRoutes, HorizontalLayout];
-      }
-    };
-    const [routes, Layout] = mapRoutesToLayout();
-
+  const renderLayoutRoutes = () => {
     const routeComponent = (
       <Suspense fallback={<SpinnerComponent />}>
         <Switch>
-          {routes.map((route, index) => {
+          {verticalLayoutRoutes.map((route, index) => {
             const { component, ...rest } = route;
 
             const RouteTag = rest?.meta?.publicRoute
@@ -80,13 +67,9 @@ const Router = ({ routes }) => {
       </Suspense>
     );
 
-    if (!Layout) {
-      return <Route path={routes.map((el) => el.path)}>{routeComponent}</Route>;
-    }
-
     return (
       <Route path={routes.map((el) => el.path)}>
-        <Layout>{routeComponent}</Layout>
+        <VerticalLayout>{routeComponent}</VerticalLayout>
       </Route>
     );
   };
@@ -95,8 +78,7 @@ const Router = ({ routes }) => {
     <Suspense fallback={null}>
       <Switch>
         {renderBlankRoutes()}
-        {renderLayoutRoutes(LAYOUT.vertical)}
-        {renderLayoutRoutes(LAYOUT.horizontal)}
+        {renderLayoutRoutes()}
         <Redirect to={USER_LIST} />
       </Switch>
     </Suspense>

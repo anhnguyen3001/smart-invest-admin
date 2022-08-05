@@ -1,5 +1,5 @@
 import SpinnerComponent from '@core/components/spinner/Fallback-spinner';
-import { LS_KEY } from 'modules/core';
+import { LS_KEY } from 'constants/index';
 import { useUser } from 'modules/user/hooks';
 import { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import {
   handleUpdateInitingIam,
 } from 'redux/authentication';
 import { useAppSelector } from 'redux/store';
-import { setupInterceptor } from 'services/request';
 import { useAxios } from 'utility/hooks/useAxios';
 import Router from './router/Router';
 import { Routes } from './router/routes';
@@ -25,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LS_KEY.accessToken);
-    console.log(accessToken);
+
     if (accessToken) {
       dispatch(handleUpdateAccessToken(accessToken));
     } else {

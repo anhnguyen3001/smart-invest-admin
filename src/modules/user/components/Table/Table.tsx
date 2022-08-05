@@ -1,10 +1,17 @@
 import UILoader from '@core/components/ui-loader';
+import { ComponentWithPermission } from 'components';
 import { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { ChevronDown, Edit, Trash } from 'react-feather';
 import ReactPaginate from 'react-paginate';
 import { Button, Card, Input, UncontrolledTooltip } from 'reactstrap';
-import { swalDeleteAction, swalWarningAction } from 'utility/Utils';
+import { useAppSelector } from 'redux/store';
+import { ACTION, RESOURCES } from 'router/permission';
+import {
+  checkPermission,
+  swalDeleteAction,
+  swalWarningAction,
+} from 'utility/Utils';
 import { MAPPING_LOGIN_METHOD } from '../../constants';
 import { GetUsersParams, User } from '../../types';
 import { userApi } from '../../utils/api';
@@ -31,6 +38,7 @@ export const Table: React.FC<TableProps> = ({
   mutateUsers,
   ...tableHeaderProps
 }) => {
+  const user = useAppSelector((state) => state.auth.user);
   const [editedUser, setEditedUser] = useState<User>();
 
   const handlePagination = (page) => {
@@ -134,6 +142,12 @@ export const Table: React.FC<TableProps> = ({
           <Input
             type="switch"
             checked={row.isVerified}
+            readOnly={
+              !checkPermission(
+                { resource: RESOURCES.USER, action: ACTION.UPDATE },
+                user,
+              )
+            }
             onChange={() => {
               onVerifyUser(row);
             }}
@@ -164,33 +178,45 @@ export const Table: React.FC<TableProps> = ({
       center: true,
       cell: (row: User) => (
         <div className="d-flex justify-content-center align-items-center">
-          <Button
-            disabled={loading}
-            id="editUser"
-            size="sm"
-            color="transparent"
-            className="btn btn-icon"
-            onClick={() => setEditedUser(row)}
+          <ComponentWithPermission
+            permission={{ resource: RESOURCES.USER, action: ACTION.UPDATE }}
           >
-            <Edit className="font-medium-2" />
-          </Button>
+            <>
+              <Button
+                disabled={loading}
+                id="editUser"
+                size="sm"
+                color="transparent"
+                className="btn btn-icon"
+                onClick={() => setEditedUser(row)}
+              >
+                <Edit className="font-medium-2" />
+              </Button>
 
-          <UncontrolledTooltip placement="top" target="editUser">
-            Chỉnh sửa
-          </UncontrolledTooltip>
+              <UncontrolledTooltip placement="top" target="editUser">
+                Chỉnh sửa
+              </UncontrolledTooltip>
+            </>
+          </ComponentWithPermission>
 
-          <Button
-            id="deleteUser"
-            size="sm"
-            color="transparent"
-            className="btn btn-icon"
-            onClick={() => onDeleteUser(row)}
+          <ComponentWithPermission
+            permission={{ resource: RESOURCES.USER, action: ACTION.DELETE }}
           >
-            <Trash className="font-medium-2" />
-          </Button>
-          <UncontrolledTooltip placement="top" target="deleteUser">
-            Xoá
-          </UncontrolledTooltip>
+            <>
+              <Button
+                id="deleteUser"
+                size="sm"
+                color="transparent"
+                className="btn btn-icon"
+                onClick={() => onDeleteUser(row)}
+              >
+                <Trash className="font-medium-2" />
+              </Button>
+              <UncontrolledTooltip placement="top" target="deleteUser">
+                Xoá
+              </UncontrolledTooltip>
+            </>
+          </ComponentWithPermission>
         </div>
       ),
     },

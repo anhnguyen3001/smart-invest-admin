@@ -1,4 +1,5 @@
-import { BaseSearchQueryParams } from 'modules/core/types';
+import { Permission } from 'modules/permission/types';
+import { BaseSearchQueryParams } from 'types';
 
 export type GetUsersParams = BaseSearchQueryParams & {
   isVerified?: string;
@@ -24,6 +25,7 @@ export interface User {
   isVerified: boolean;
   role?: Role;
   updatedAt?: string;
+  permissions: Permission[];
 }
 
 export interface UpdateUserRequest {

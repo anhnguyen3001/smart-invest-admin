@@ -1,4 +1,4 @@
-import { LS_KEY } from 'modules/core';
+import { LS_KEY } from 'constants/index';
 import { useUser } from 'modules/user/hooks';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';

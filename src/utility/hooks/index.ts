@@ -10,4 +10,3 @@ export * from './useRouterTransition';
 export * from './useRTL';
 export * from './useSkin';
 export * from './useUploadImage';
-export * from './useUserInfo';

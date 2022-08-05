@@ -10,10 +10,10 @@ export const UserRoutes = [
     component: <UserList />,
     meta: {
       publicRoute: false,
-      permission: {
-        resource: RESOURCES.USER,
-        action: ACTION.READ,
-      },
+      // permission: {
+      //   resource: RESOURCES.USER,
+      //   action: ACTION.READ,
+      // },
     },
   },
 ];

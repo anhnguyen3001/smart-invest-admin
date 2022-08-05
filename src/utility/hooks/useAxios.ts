@@ -1,10 +1,12 @@
 import { AxiosError } from 'axios';
+import { useUser } from 'modules/user/hooks';
 import { useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useAppSelector } from 'redux/store';
 import { adminBffClient } from 'services/request';
 
 export const useAxios = () => {
+  const { logout } = useUser();
   const accessToken = useAppSelector((state) => state.auth.accessToken);
 
   const handleResponseError = useCallback((error: AxiosError) => {
@@ -12,7 +14,7 @@ export const useAxios = () => {
     const status = response?.status;
     switch (status) {
       case 401:
-        // logout();
+        logout();
         toast.error('Phiên sử dụng đã hết hạn.');
         break;
       default:

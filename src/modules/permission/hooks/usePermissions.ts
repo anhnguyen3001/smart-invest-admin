@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import { OrderBy } from 'modules/core/types';
+import { OrderBy } from 'types';
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { GetPermissionsParams, Permission } from '../types';

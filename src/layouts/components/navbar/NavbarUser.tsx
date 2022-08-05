@@ -1,5 +1,5 @@
 import Avatar from '@core/components/avatar';
-import { useAuth } from 'modules/core';
+import { useUser } from 'modules/user/hooks';
 import { Power, User } from 'react-feather';
 import {
   DropdownItem,
@@ -7,10 +7,11 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
 } from 'reactstrap';
+import { useAppSelector } from 'redux/store';
 
 const NavbarUser = () => {
-  const { user, logout } = useAuth();
-  const { avatar } = user || {};
+  const { avatar, username } = useAppSelector((state) => state.auth.user) || {};
+  const { logout } = useUser();
 
   return (
     <ul className="nav navbar-nav align-items-center ms-auto">
@@ -26,6 +27,7 @@ const NavbarUser = () => {
             imgHeight="40"
             imgWidth="40"
           />
+          <div className="ms-1">{username}</div>
         </DropdownToggle>
         <DropdownMenu end>
           <DropdownItem style={{ width: '100%' }} onClick={logout}>

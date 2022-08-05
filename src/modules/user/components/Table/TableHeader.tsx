@@ -1,4 +1,4 @@
-import { PAGE_SIZE_OPTIONS } from 'modules/core';
+import { PAGE_SIZE_OPTIONS } from 'constants/index';
 import Select from 'react-select';
 import { Col, Input, Row } from 'reactstrap';
 import { selectThemeColors } from 'utility/Utils';

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SelectValue } from 'modules/core/types';
-import { Button } from 'modules/core/components';
+import { SelectValue } from 'types';
+import { Button } from 'components';
 import { RolenSelect } from 'modules/role/components/RoleSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';

@@ -2,8 +2,7 @@ import InputPasswordToggle from '@core/components/input-password-toggle';
 import '@core/scss/react/pages/page-authentication.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import logo from 'assets/images/logo/logo.png';
-import { PATTERN_VALIDATION } from 'modules/core';
-import { PageWithRecaptcha } from 'modules/core/components';
+import { PATTERN_VALIDATION } from 'constants/index';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
@@ -179,12 +178,4 @@ const Register = () => {
   );
 };
 
-const RegisterWithRecaptcha = () => {
-  return (
-    <PageWithRecaptcha>
-      <Register />
-    </PageWithRecaptcha>
-  );
-};
-
-export default RegisterWithRecaptcha;
+export default Register;

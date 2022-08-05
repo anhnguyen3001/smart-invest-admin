@@ -2,7 +2,7 @@ import InputPasswordToggle from '@core/components/input-password-toggle';
 import '@core/scss/react/pages/page-authentication.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import themeConfig from 'configs/themeConfig';
-import { PATTERN_VALIDATION } from 'modules/core';
+import { PATTERN_VALIDATION } from 'constants/index';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {

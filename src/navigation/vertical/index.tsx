@@ -1,4 +1,4 @@
-import { Compass, Home, Key, Lock, UserCheck, Users } from 'react-feather';
+import { Compass, Home, Key, UserCheck, Users } from 'react-feather';
 import {
   ADMIN,
   PERMISSION_LIST,
@@ -37,7 +37,11 @@ const navigation = [
     icon: <UserCheck size={20} />,
     navLink: ROLE_LIST,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
+      permission: {
+        resource: RESOURCES.ROLE,
+        action: ACTION.READ,
+      },
     },
   },
   {
@@ -46,7 +50,11 @@ const navigation = [
     icon: <Key size={20} />,
     navLink: PERMISSION_LIST,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
+      permission: {
+        resource: RESOURCES.PERMISSION,
+        action: ACTION.READ,
+      },
     },
   },
   {
@@ -55,7 +63,11 @@ const navigation = [
     icon: <Compass size={20} />,
     navLink: ROUTE_LIST,
     meta: {
-      publicRoute: true,
+      publicRoute: false,
+      permission: {
+        resource: RESOURCES.ROUTE,
+        action: ACTION.READ,
+      },
     },
   },
 ];

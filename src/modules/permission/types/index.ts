@@ -1,4 +1,4 @@
-import { BaseSearchQueryParams } from 'modules/core/types';
+import { BaseSearchQueryParams } from 'types';
 
 export type GetPermissionsParams = BaseSearchQueryParams;
 

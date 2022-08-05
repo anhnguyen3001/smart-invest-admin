@@ -1,4 +1,5 @@
-import { BaseSearchQueryParams } from 'modules/core/types';
+import { BaseSearchQueryParams } from 'types';
+import { Permission } from 'modules/permission/types';
 
 export type GetRolesParams = BaseSearchQueryParams;
 
@@ -6,6 +7,7 @@ export interface Role {
   id: number;
   name: string;
   code: string;
+  permissions: Permission[];
 }
 
 export interface CreateRoleRequest {

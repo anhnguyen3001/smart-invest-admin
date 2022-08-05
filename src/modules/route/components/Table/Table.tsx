@@ -1,9 +1,11 @@
 import UILoader from '@core/components/ui-loader';
+import { ComponentWithPermission } from 'components';
 import { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { ChevronDown, Edit, Trash } from 'react-feather';
 import ReactPaginate from 'react-paginate';
 import { Button, Card, UncontrolledTooltip } from 'reactstrap';
+import { ACTION, RESOURCES } from 'router/permission';
 import { swalDeleteAction } from 'utility/Utils';
 import { GetRoutesParams, Route } from '../../types';
 import { routeApi } from '../../utils/api';
@@ -44,7 +46,7 @@ export const Table: React.FC<TableProps> = ({
 
   const onDelete = (row: Route) => {
     swalDeleteAction(
-      `Xóa đường dẫn ${row.name}?`,
+      `Xóa đường dẫn ${row.regUri}?`,
       'Dữ liệu sẽ không thể khôi phục sau khi xóa!',
       () => deleteRoute(row.id),
     );
@@ -104,36 +106,47 @@ export const Table: React.FC<TableProps> = ({
       center: true,
       cell: (row: Route) => (
         <div className="d-flex justify-content-center align-items-center">
-          <Button
-            disabled={loading}
-            id="editRoute"
-            size="sm"
-            color="transparent"
-            className="btn btn-icon"
-            onClick={() => {
-              setVisibleModal(true);
-              setEditedRoute(row);
-            }}
+          <ComponentWithPermission
+            permission={{ resource: RESOURCES.ROUTE, action: ACTION.DELETE }}
           >
-            <Edit className="font-medium-2" />
-          </Button>
+            <>
+              <Button
+                disabled={loading}
+                id="editRoute"
+                size="sm"
+                color="transparent"
+                className="btn btn-icon"
+                onClick={() => {
+                  setVisibleModal(true);
+                  setEditedRoute(row);
+                }}
+              >
+                <Edit className="font-medium-2" />
+              </Button>
+              <UncontrolledTooltip placement="top" target="editRoute">
+                Chỉnh sửa
+              </UncontrolledTooltip>
+            </>
+          </ComponentWithPermission>
 
-          <UncontrolledTooltip placement="top" target="editRoute">
-            Chỉnh sửa
-          </UncontrolledTooltip>
-
-          <Button
-            id="deleteRoute"
-            size="sm"
-            color="transparent"
-            className="btn btn-icon"
-            onClick={() => onDelete(row)}
+          <ComponentWithPermission
+            permission={{ resource: RESOURCES.ROUTE, action: ACTION.DELETE }}
           >
-            <Trash className="font-medium-2" />
-          </Button>
-          <UncontrolledTooltip placement="top" target="deleteRoute">
-            Xoá
-          </UncontrolledTooltip>
+            <>
+              <Button
+                id="deleteRoute"
+                size="sm"
+                color="transparent"
+                className="btn btn-icon"
+                onClick={() => onDelete(row)}
+              >
+                <Trash className="font-medium-2" />
+              </Button>
+              <UncontrolledTooltip placement="top" target="deleteRoute">
+                Xoá
+              </UncontrolledTooltip>
+            </>
+          </ComponentWithPermission>
         </div>
       ),
     },

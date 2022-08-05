@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SUCCESS_MSG } from 'modules/core';
-import { Button } from 'modules/core/components';
+import { Button } from 'components';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -21,6 +20,7 @@ import { permissionApi } from '../utils/api';
 import Select from 'react-select';
 import { ACTION, MAPPING_ACTION, RESOURCES } from 'router/permission';
 import classNames from 'classnames';
+import { SUCCESS_MSG } from 'constants/index';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên quyền'),

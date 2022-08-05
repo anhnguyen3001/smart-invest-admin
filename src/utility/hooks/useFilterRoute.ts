@@ -7,8 +7,5 @@ export const useFilterRoute = (routes) => {
     verticalLayoutRoutes: routes.filter(
       (el) => !el?.meta?.layout || el?.meta?.layout === LAYOUT.vertical,
     ),
-    horizontalLayoutRoutes: routes.filter(
-      (el) => el?.meta?.layout === LAYOUT.horizontal,
-    ),
   };
 };

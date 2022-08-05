@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SUCCESS_MSG } from 'modules/core';
-import { Button } from 'modules/core/components';
-import { SelectValue } from 'modules/core/types';
+import { SUCCESS_MSG } from 'constants/index';
+import { Button } from 'components';
+import { SelectValue } from 'types';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ import {
 import * as yup from 'yup';
 import { Role } from '../types';
 import { roleApi } from '../utils/api';
+import { useUser } from 'modules/user/hooks';
 
 const validationSchema = yup.object().shape({
   name: yup.string().trim().required('Vui lòng nhập tên role'),
@@ -27,7 +28,7 @@ const validationSchema = yup.object().shape({
 interface RoleForm {
   name: string;
   code: string;
-  permissionsIds: SelectValue<number>[] | null;
+  permissionIds: SelectValue<number>[] | null;
 }
 
 interface RoleModalProps {
@@ -62,11 +63,14 @@ const RoleModal: React.FC<RoleModalProps> = ({
   });
   const [loading, setLoading] = useState(false);
 
+  const { fetchUser } = useUser();
+
   const onSubmit = async (data: RoleForm) => {
     const submitData = {
       ...data,
-      permissionIds: data.permissionsIds?.map(({ value }) => value),
+      permissionIds: data.permissionIds?.map(({ value }) => value),
     };
+
     if (!loading) {
       setLoading(true);
 
@@ -74,6 +78,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
         if (role) {
           await roleApi.updateRole(role.id, submitData);
           toast.success(SUCCESS_MSG.UPDATE_ROLE, { position: 'top-right' });
+          await fetchUser();
         } else {
           await roleApi.createRole(submitData);
           toast.success(SUCCESS_MSG.CREATE_ROLE, { position: 'top-right' });
@@ -95,6 +100,13 @@ const RoleModal: React.FC<RoleModalProps> = ({
       if (role) {
         setValue('name', role.name);
         setValue('code', role.code);
+        setValue(
+          'permissionIds',
+          role.permissions?.map(({ id, name }) => ({
+            label: name,
+            value: id,
+          })) as any,
+        );
       }
 
       const handlePressEnter = (event) => {

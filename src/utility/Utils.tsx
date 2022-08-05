@@ -6,6 +6,8 @@ import { ADMIN } from 'router/path';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { KEY_USER_LS } from 'configs/constants';
+import { User } from 'modules/user/types';
+import { AppPermisison } from 'types';
 
 export const MySwal = withReactContent(Swal);
 
@@ -111,19 +113,6 @@ export const login = (path) => {
   TekoMarket.auth.user.login(redirectUrl);
 };
 
-export const logout = () => {
-  TekoMarket.auth.user.logout();
-  localStorage.removeItem(KEY_USER_LS);
-};
-
-export const fetchUserInfo = async () => {
-  return TekoMarket.auth.user.getFullUserInfo();
-};
-
-export const getAccessToken = () => {
-  return TekoMarket.auth.user.getAccessToken();
-};
-
 const MAPPING_CODE_MESSAGE = {
   400000:
     'Người dùng đã gửi một yêu cầu không hợp lệ, thiếu tham số hoặc các trường bắt buộc trong request body',
@@ -158,65 +147,6 @@ const MAPPING_CODE_MESSAGE = {
   424000: 'Có lỗi xảy ra khi gọi API bên ngoài',
   500000: 'Có lỗi xảy ra, vui lòng thử lại sau',
   500001: 'Có lỗi xảy ra, vui lòng thử lại sau',
-};
-
-export const handleResponseError = (error) => {
-  const status = error?.response?.status;
-  switch (status) {
-    case 401:
-      logout();
-      break;
-    case 403:
-      // denyAccess();
-      break;
-    default:
-      // Handle error message from API response
-      const message = error?.response?.data?.message;
-      const customCode = error?.response?.data?.code;
-      const customMessage = MAPPING_CODE_MESSAGE[customCode];
-
-      toast.error(
-        (t) => (
-          <div className="w-100 d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              <div>
-                <p className="mb-0">
-                  Có lỗi:{' '}
-                  {customMessage ||
-                    message ||
-                    'Hệ thống đang có lỗi, vui lòng thử lại sau'}
-                </p>
-                {!customCode && (
-                  <small>
-                    Vui lòng gửi thông tin lỗi về email{' '}
-                    <a href="mailto:luc.hn@teko.vn">luc.hn@teko.vn</a> để chúng
-                    tôi có thể hỗ trợ bạn nhé
-                  </small>
-                )}
-              </div>
-            </div>
-            <X size="14" onClick={() => toast.dismiss(t.id)} />
-          </div>
-        ),
-        {
-          style: {
-            minWidth: '300px',
-          },
-        },
-      );
-      break;
-  }
-};
-
-const CURRENT_MERCHANT = 'currentMerchant';
-
-export const getCurrentMerchant = () => {
-  const currentMerchant = localStorage.getItem(CURRENT_MERCHANT);
-  return currentMerchant ? JSON.parse(currentMerchant) : null;
-};
-
-export const setCurrentMerchant = (id) => {
-  localStorage.setItem(CURRENT_MERCHANT, id?.toString());
 };
 
 export const queryStringToObject = (
@@ -269,7 +199,7 @@ export const normalizeSeparator = (
   return value;
 };
 
-export const buildPermission = ({ resource, action }) => {
+export const buildPermission = ({ resource, action }: AppPermisison) => {
   return [resource, action].join(':');
 };
 
@@ -346,13 +276,16 @@ export const swalWarningAction = (swalOptions, callback, successMessage) => {
   });
 };
 
-export const checkPermission = (metaData, user) => {
-  if (metaData?.publicRoute !== false) return true;
-  const { permission } = metaData || {};
-  if (!permission) return !!user;
+export const checkPermission = (
+  requiredPermission: AppPermisison,
+  user: User,
+) => {
+  if (!requiredPermission) return !!user;
 
-  const strPermission = buildPermission(permission);
-  return (user?.permissions || []).some((p) => p.startsWith(strPermission));
+  const strPermission = buildPermission(requiredPermission);
+  return (user?.permissions || []).some(({ code }) =>
+    code.startsWith(strPermission),
+  );
 };
 
 export const getEnv = (key: string) => {

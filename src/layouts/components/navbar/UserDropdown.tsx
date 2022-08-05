@@ -1,5 +1,6 @@
 // ** Custom Components
 import Avatar from '@core/components/avatar';
+import { useUser } from 'modules/user/hooks';
 
 // ** Third Party Components
 import { User, Power } from 'react-feather';
@@ -13,13 +14,11 @@ import {
 } from 'reactstrap';
 
 // ** Default Avatar Image
-import { logout } from 'utility/Utils';
 import { useAppSelector } from 'redux/store';
 
 const UserDropdown = () => {
-  // ** Store Vars
-  const authStore = useAppSelector((state) => state.auth);
-  const { picture } = authStore?.user || {};
+  const { logout } = useUser();
+  const { picture } = useAppSelector((state) => state.auth.user) || {};
 
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
@@ -37,7 +36,7 @@ const UserDropdown = () => {
         />
       </DropdownToggle>
       <DropdownMenu end>
-        <DropdownItem style={{ width: '100%' }} onClick={() => logout()}>
+        <DropdownItem style={{ width: '100%' }} onClick={logout}>
           <Power size={14} className="me-75" />
           <span className="align-middle">Đăng xuất</span>
         </DropdownItem>

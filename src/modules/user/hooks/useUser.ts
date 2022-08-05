@@ -1,5 +1,9 @@
+import { LS_KEY } from 'constants/index';
 import { useDispatch } from 'react-redux';
-import { handleUpdateUser } from 'redux/authentication';
+import {
+  handleUpdateAccessToken,
+  handleUpdateUser,
+} from 'redux/authentication';
 import { userApi } from '../utils/api';
 
 export const useUser = () => {
@@ -16,5 +20,11 @@ export const useUser = () => {
     }
   };
 
-  return { fetchUser };
+  const logout = () => {
+    localStorage.removeItem(LS_KEY.accessToken);
+    dispatch(handleUpdateUser(null));
+    dispatch(handleUpdateAccessToken(undefined));
+  };
+
+  return { fetchUser, logout };
 };

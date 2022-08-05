@@ -1,4 +1,4 @@
-import { BaseSearchQueryParams } from 'modules/core/types';
+import { BaseSearchQueryParams } from 'types';
 import { Permission } from 'modules/permission/types';
 
 export enum MethodEnum {

@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { PATTERN_VALIDATION, SUCCESS_MSG } from 'modules/core';
-import { Button } from 'modules/core/components';
+import { PATTERN_VALIDATION, SUCCESS_MSG } from 'constants/index';
+import { Button } from 'components';
 import { PermissionSelect } from 'modules/permission/components/PermissionSelect';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -97,9 +97,15 @@ const RouteModal: React.FC<RouteModalProps> = ({
       setSelectDynamicRegex(false);
     } else {
       if (route) {
-        setValue('name', route.name.replace(routePrefix, ''));
         setValue('regUri', route.regUri.replace(routePrefix, ''));
-        setValue('method', route.method);
+        setValue('method', {
+          label: route.method,
+          value: route.method,
+        } as any);
+        setValue('permissionId', {
+          label: route.permission?.name,
+          value: route.permission?.id,
+        } as any);
       }
 
       const handlePressEnter = (event) => {
@@ -210,35 +216,37 @@ const RouteModal: React.FC<RouteModalProps> = ({
             )}
           </div>
 
-          <div className="mb-1">
-            <Label for="name">Đường dẫn</Label>
-            <Controller
-              control={control}
-              name="name"
-              render={({ field: { onChange, ...rest } }) => (
-                <InputGroup>
-                  <InputGroupText>{routePrefix}</InputGroupText>
-                  <Input
-                    {...rest}
-                    invalid={!!errors.name}
-                    placeholder="Nhập đường dẫn"
-                    onChange={(e) => {
-                      generateAndUpdateRegUri(e.target.value);
-                      onChange(e);
-                    }}
-                  />
-                </InputGroup>
+          {!route && (
+            <div className="mb-1">
+              <Label for="name">Đường dẫn</Label>
+              <Controller
+                control={control}
+                name="name"
+                render={({ field: { onChange, ...rest } }) => (
+                  <InputGroup>
+                    <InputGroupText>{routePrefix}</InputGroupText>
+                    <Input
+                      {...rest}
+                      invalid={!!errors.name}
+                      placeholder="Nhập đường dẫn"
+                      onChange={(e) => {
+                        generateAndUpdateRegUri(e.target.value);
+                        onChange(e);
+                      }}
+                    />
+                  </InputGroup>
+                )}
+              />
+              {errors.name && (
+                <div className="invalid-feedback d-block">
+                  {errors.name.message}
+                </div>
               )}
-            />
-            {errors.name && (
-              <div className="invalid-feedback d-block">
-                {errors.name.message}
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="mb-1">
-            <Label for="regUri">Expression</Label>
+            <Label for="regUri">{route ? 'Đường dẫn' : 'Expression'}</Label>
             <Controller
               control={control}
               name="regUri"

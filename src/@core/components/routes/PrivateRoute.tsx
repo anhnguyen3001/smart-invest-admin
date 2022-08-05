@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<RouteProps> = ({ children, route }) => {
     return <Redirect to={LOGIN} />;
   }
 
-  if (!checkPermission(route.meta, user)) {
+  if (!checkPermission(route.meta.permission, user)) {
     return <Redirect to={NOT_FOUND} />;
   }
 
