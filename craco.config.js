@@ -42,11 +42,6 @@ module.exports = {
             name: 'base',
             priority: 100,
           },
-          baseComponents: {
-            test: /teko-builder-base-components/,
-            name: 'baseElement',
-            priority: 100,
-          },
           commons: {
             chunks: 'all',
             minChunks: 2,
