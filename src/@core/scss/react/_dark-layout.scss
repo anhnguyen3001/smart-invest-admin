@@ -85,11 +85,6 @@
     border-color: $success;
   }
 
-  // Apex Charts
-  .apexcharts-gridlines-vertical line {
-    stroke: $theme-dark-border-color;
-  }
-
   .horizontal-layout {
     &.navbar-static .header-navbar.navbar-scrolled {
       background-color: $theme-dark-body-bg;

@@ -1031,23 +1031,6 @@
     }
   }
 
-  //--------------- Statistics Card ---------------
-  //------------------------------------------------
-
-  .card-tiny-line-stats {
-    .apexcharts-series-markers {
-      .apexcharts-marker {
-        stroke: $info;
-      }
-
-      &:last-child {
-        .apexcharts-marker {
-          fill: $theme-dark-card-bg;
-        }
-      }
-    }
-  }
-
   //-------------- Analytics Cards --------------
   //---------------------------------------------
 
@@ -1055,26 +1038,6 @@
   .card-revenue-budget {
     .revenue-report-wrapper {
       border-right-color: $theme-dark-border-color;
-    }
-    .budget-wrapper {
-      .apexcharts-series:not(:first-child) {
-        path {
-          stroke: $theme-dark-body-color;
-        }
-      }
-    }
-  }
-
-  // Earnings Card
-  .earnings-card {
-    .apexcharts-canvas .apexcharts-pie {
-      .apexcharts-datalabel-label {
-        fill: $theme-dark-body-color !important;
-      }
-
-      .apexcharts-datalabel-value {
-        fill: $theme-dark-headings-color;
-      }
     }
   }
 

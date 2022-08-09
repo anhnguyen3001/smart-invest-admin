@@ -442,17 +442,6 @@
     @include media-breakpoint-up(md) {
       border-right: 1px solid $border-color;
     }
-
-    #revenue-report-chart {
-      .apexcharts-series {
-        &[seriesName='Earning'] {
-          transform: scaleY(0.965);
-        }
-        &[seriesName='Expense'] {
-          transform: scaleY(1.035);
-        }
-      }
-    }
   }
 
   .budget-wrapper {
@@ -470,21 +459,6 @@
     #budget-chart {
       margin-top: 2rem;
       margin-bottom: 2rem;
-    }
-  }
-}
-
-// Earnings Card
-.earnings-card {
-  .apexcharts-canvas .apexcharts-pie {
-    .apexcharts-datalabel-label {
-      font-size: 0.8rem;
-      fill: $body-color !important;
-    }
-    .apexcharts-datalabel-value {
-      fill: $headings-color;
-      font-size: 1.286rem;
-      font-weight: 500;
     }
   }
 }
