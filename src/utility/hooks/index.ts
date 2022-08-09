@@ -9,4 +9,3 @@ export * from './useRoute';
 export * from './useRouterTransition';
 export * from './useRTL';
 export * from './useSkin';
-export * from './useUploadImage';

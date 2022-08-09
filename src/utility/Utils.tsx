@@ -1,13 +1,9 @@
-import { DefaultRoute } from '../router/routes';
-import TekoMarket from 'teko-market-v1';
+import { User } from 'modules/user/types';
 import toast from 'react-hot-toast';
-import { X } from 'react-feather';
-import { ADMIN } from 'router/path';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { KEY_USER_LS } from 'configs/constants';
-import { User } from 'modules/user/types';
 import { AppPermisison } from 'types';
+import { DefaultRoute } from '../router/routes';
 
 export const MySwal = withReactContent(Swal);
 
@@ -101,17 +97,6 @@ export const selectThemeColors = (theme) => ({
     neutral30: '#ededed', // for input hover border-color
   },
 });
-
-export const isLoggedIn = () => {
-  return TekoMarket.auth.user.isLoggedIn();
-};
-
-export const login = (path) => {
-  const redirectUrl =
-    window.location.origin + (typeof path === 'string' ? path : ADMIN);
-
-  TekoMarket.auth.user.login(redirectUrl);
-};
 
 const MAPPING_CODE_MESSAGE = {
   400000:

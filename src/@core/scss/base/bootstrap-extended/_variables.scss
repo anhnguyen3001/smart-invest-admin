@@ -54,7 +54,7 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1440px // Custom xxl size,
+  xxl: 1440px // Custom xxl size,,
 ) !default;
 
 $container-max-widths: (
@@ -63,7 +63,7 @@ $container-max-widths: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1440px // Custom xxl size,
+  xxl: 1440px // Custom xxl size,,
 ) !default;
 // scss-docs-end container-max-widths
 
@@ -463,7 +463,7 @@ $card-cap-bg: transparent !default;
 
 $card-img-overlay-padding: $spacer !default;
 
-$card-group-margin: calc($grid-gutter-width / 2) !default;
+$card-group-margin: calc(#{$grid-gutter-width} / 2) !default;
 
 // Accordion
 $accordion-padding-x: 1rem !default;
