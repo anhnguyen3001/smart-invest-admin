@@ -1,5 +1,5 @@
 const AdminHome = () => {
-  return <>Home</>;
+  return <>Trang chủ</>;
 };
 
 export default AdminHome;

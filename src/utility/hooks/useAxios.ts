@@ -19,7 +19,7 @@ export const useAxios = () => {
         break;
       default:
         // Handle error message from API response
-        const code = response?.data?.code;
+        // const code = response?.data?.code;
         let message = null;
 
         if (error.response && error.response.data) {

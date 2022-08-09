@@ -98,42 +98,6 @@ export const selectThemeColors = (theme) => ({
   },
 });
 
-const MAPPING_CODE_MESSAGE = {
-  400000:
-    'Người dùng đã gửi một yêu cầu không hợp lệ, thiếu tham số hoặc các trường bắt buộc trong request body',
-  400001: 'Thiếu trường thông tin trong header',
-  400002: 'Liên kết đã được sử dụng, vui lòng thử với liên kết khác',
-  400003: 'Slug đã tồn tại trong một liên kết khác',
-  400004: 'Người dùng đã tồn tại',
-  400005: 'Id cửa hàng đã tồn tại',
-  400006: 'Tên nhãn đã tồn tại',
-  400007: 'Sku sản phẩm đã tồn tại',
-  400008: 'Tên miền đã tồn tại',
-  400009: 'Tên miền đã được liên kết với một cửa hàng khác',
-  400011: 'Tên miền đã được sử dụng cho một trang đã xuất bản',
-  400012: 'Tên miền chưa được cấu hình DNS',
-  400013: 'Thiếu slug hoặc domainId để xuất bản trang',
-  400014: 'Tên miền của cửa hàng khác với trang của cửa hàng',
-  400015: 'Người dùng không thể truy cập market merchant này',
-  401000: 'Không xác thực được người dùng',
-  403000: 'Người dùng không được phép truy cập tài nguyên này',
-  403001: 'Người dùng chưa có cửa hàng nào',
-  404001: 'Không tìm thấy trang được yêu cầu',
-  404002: 'Không tìm thấy danh mục được yêu cầu',
-  404003: 'Không tìm thấy giao diện mẫu được yêu cầu',
-  404004: 'Không tìm thấy cửa hàng được yêu cầu',
-  404005: 'Không tìm thấy đối tác được yêu cầu',
-  404006: 'Không tìm thấy người dùng được yêu cầu',
-  404007: 'Không tìm thấy khối được yêu cầu',
-  404008: 'Không tìm thấy nhãn sản phẩm được yêu cầu',
-  404009: 'Không tìm thấy sản phẩm được yêu cầu',
-  404010: 'Không tìm thấy tên miền được yêu cầu',
-  404011: 'Không tìm thấy popup được yêu cầu',
-  424000: 'Có lỗi xảy ra khi gọi API bên ngoài',
-  500000: 'Có lỗi xảy ra, vui lòng thử lại sau',
-  500001: 'Có lỗi xảy ra, vui lòng thử lại sau',
-};
-
 export const queryStringToObject = (
   search: string,
   arrayKey: string[] = [],
